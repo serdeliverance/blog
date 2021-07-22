@@ -271,7 +271,7 @@ val graph = sourceList
   .via(lineToBytes)
   .toMat(sinkToFile)(Keep.right)    // we indicate we want to materialize the materialized value emitted by sinkToFile
 
-val result: Future[IOResult] = graph2.run()
+val result: Future[IOResult] = graph.run()
 
 ```
 
