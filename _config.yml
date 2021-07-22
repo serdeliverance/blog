@@ -63,7 +63,7 @@ author:
   name   : "Sergio Cano"
   bio    : "Blogging about software development in general, and Scala, Java and FP in particular."
   links:
-    - label: "LikedIn"
+    - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/sergio-cano-2baa4257/"
     - label: "GitHub"
