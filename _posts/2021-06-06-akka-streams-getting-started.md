@@ -281,11 +281,19 @@ val result: Future[IOResult] = graph.run()
 
 `TODO` complete this section
 
-# A real world example
+# A minimal real world example
 
-Now that we have the basics of `Akka Streams`, it is time to see how we can use this tool to solve real world escenarios.
+Now that we have the basics of `Akka Streams`, it is time to see how we can use this tool to solve real world problems (a minimal one in this case, but we'll see another more elaborated example in the next post).
 
 `TODO`
+
+``` scala
+Slick
+    .source(transactionTable.filter(t => t.email === "conception.hessel@gmail.com").result)
+    .fold(BigDecimal(0))((acc, tx) => tx.amount + acc)
+    .map(amount => ByteString(amount.toString()))
+    .runWith(FileIO.toPath(outputFile))
+```
 
 # Conclusion
 
