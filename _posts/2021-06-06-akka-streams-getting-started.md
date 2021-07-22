@@ -13,7 +13,7 @@ header:
 
 # Intro
 
-Hi, everyone. There has been a long time from my last post. In this post, I want to introduce you to the `Akka Streams` library which I considered is an awesome and powerfull tool for writing asynchronous pipelines of data transformation. In this intro, I want to show you what `Akka Stream` is, what problems it solves, where it can be a good fit, what are its basic building blocks, an intro to the Alpakka project through a real world example.
+Hi, everyone. There has been a long time from my last post. In this post, I want to introduce you to the `Akka Streams` library which I considered is an awesome and powerfull tool for writing asynchronous pipelines of data transformation. In this intro, I want to show you what `Akka Stream` is, what problems it solves, where it can be a good fit, what are its basic building blocks, and an intro to the Alpakka project through a real world example.
 
 Before talking about Akka Streams, it is important to know what streams are.
 
@@ -199,14 +199,14 @@ val lineToBytes = Flow[String].map(line => ByteString(s"$line\n"))
 
 val sinkToFile = FileIO.toPath(Paths.get("result.txt"))
 
-val graph2 = sourceList
+val graph = sourceList
   .via(addOne)
   .via(cube)
   .via(toLine)
   .via(lineToBytes)
   .to(sinkToFile)
 
-graph2.run()
+graph.run()
 ```
 
 If we see that different sequences of transformations repeats frequently we can also create new reutilizable pieces (source, flow, sinks) by connecting them:
@@ -218,11 +218,11 @@ val numberConverter = addOne.via(cube).via(toLine)
 // combination of linetToBytes (flow) with sinkToFile, creating a new Sink.
 val sinkLineToFile: Sink[String, NotUsed] = lineToBytes.to(sinkToFile)
 
-val graph3 = sourceList
+val graph = sourceList
   .via(numberConverter)
   .to(sinkLineToFile)
 
-graph3.run()
+graph.run()
 ```
 
 So, you can see that is very easy to define reutilizable pieces. It is up to you to decide how to combine them and what fits better with your use case.
@@ -283,8 +283,10 @@ val result: Future[IOResult] = graph2.run()
 
 # A real world example
 
-`TODO` complete this section
+Now that we have the basics of `Akka Streams`, it is time to see how we can use this tool to solve real world escenarios.
+
+`TODO`
 
 # Conclusion
 
-In this tutorial we have seen what `Akka Stream` is and what problems it solves. However, some topics were missing, such as logging, error handling, stream lifecycle, testing and some operators. Those will be covered in future posts. Also, I want to write a dedicated one about working with `Graph DSL`, which is a powerful API that `Akka Streams` provide us in order to write no linear asynchronous pipelines.
+In this tutorial we have seen what `Akka Stream` is and what problems it solves. However, some topics were missing, such as logging, error handling, stream lifecycle, testing and some operators. Those will be covered in future posts. Also, I want to write a dedicated one about working with `Graph DSL`, which is a powerful API that `Akka Streams` provide us in order to write no linear asynchronous pipelines. The sample code of this post is available on [GitHub](https://github.com/serdeliverance/akka-streams-demo).
