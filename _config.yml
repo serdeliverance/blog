@@ -61,7 +61,7 @@ plugins:
 
 author:
   name   : "Sergio Cano"
-  bio    : "Blogging about software development in general, and Scala, Java and FP in particular."
+  bio    : "Blogging about software development in general, and Scala and FP, in particular."
   links:
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
