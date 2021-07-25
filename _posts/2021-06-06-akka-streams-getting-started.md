@@ -239,23 +239,25 @@ A `Materializer` is bringed into scope through the `ActorSystem`. So, having an 
 
 What happens inside a stream stays inside it.
 
-What I'm trying to say is that when running a stream there is no observable effect outside. The effectful part happends in the sink, which is the consumer side of the stream, but not in other places of the external world.
+What I'm trying to say is that when running a stream there is no observable effect outside. The effectful part happends in the Sink, which is the consumer side of the stream, but not in other places of the external world (if you sink to a DB, the change will be reflected on the DB, if you sink to a Kafka topic, that change will be reflected there but not somewhere).
 
 However, there are situations when you want the stream to give you some information regarding processing. In that case, you need a `Materialized value`.
 
 A `Materialized value` is an auxiliary value emitted from the stream to the outside world. It is a value that the stream "expose" to us when running.
 
-Every graph component (Source, Flow and Sink) can materialize values. The type of the materialized value a component can emit is indicated by its last type parameter. Example:
+Every graph component (Source, Flow and Sink) can emit materialized values. The type of the materialized value that a component can emit is indicated by its last type parameter. Example:
 
 ``` scala
-val sourceList: Source[Int, NotUsed] = Source(1 to 1000)      // emits no value to the external world
+val sourceList: Source[Int, NotUsed] = Source(1 to 1000)      // it emits no meaningful value to the external world
 
-val addOne: Flow[Int, Int, NotUsed] = Flow[Int].map(x => x + 1) // emits no value to the external world
+val addOne: Flow[Int, Int, NotUsed] = Flow[Int].map(x => x + 1) // it emits no meaningful value to the external world
 
 val sinkToFile: Sink[ByteString, Future[IOResult]] = FileIO.toPath(Paths.get("result.txt")) // emits a file
 ```
 
-If every element can emit a materialized value, how can we decide which one to pick? By default, between two contiguous components, the materialized value of the component who is nearest to the source is taken. Example:
+If every element can emit a materialized value, how we can decide which one to pick? In this case, the API is very flexible and it give us the possibility to chose what value to take. For that reason, it give us the following methods: `via`, `to`, `viaMat`, `toMat`.
+
+`TODO different materializations with examples`
 
 ``` scala
 val result = Source(List("scala", "akka", "streams"))
@@ -275,11 +277,15 @@ val result: Future[IOResult] = graph.run()
 
 ```
 
+Also, the `runWith` method (available on `Source`, `Flow` and `Sink`) takes an specific side depending of the component who calls it. For example: if it is called from a Source, it materializes the left value. If it's called from a `Sink`, it materializes the ...`TODO`. If its called from a `Flow`, it materializes both.
+
 `TODO` complete this section
 
 # Alpakka
 
-`TODO` complete this section
+[Alpakka project](https://doc.akka.io/docs/alpakka/current/) is an open source iniciative for creating connectors that are compliant with `Reactive Streams` specification and that allow us to create reactive integration pipelines. Those connectors are built on top on `Akka Streams` so they can together very easily.
+
+Alpakka project offers reactive connectors for different technologies such as Kafka, JMS, Slick, AWS services (e.g., Kinesis, DynamoDB, etc), Google Cloud Services, among others. In the next section we'll use the [Slick connector](https://doc.akka.io/docs/alpakka/current/) in order to define a graph that streams JDBC query result set downstream.
 
 # A minimal real world example
 
@@ -307,11 +313,12 @@ val clientBalanceOutputFile = Paths.get("client-balance.txt")
 Slick
   .source(transactionTable.filter(t => t.email === "conception.hessel@gmail.com" && t.status === "approved").result)
   .fold(BigDecimal(0))((acc, tx) => tx.amount + acc)
-  .map(amount => ByteString(amount.toString()))
+  .map(amount => amount.toString)
+  .map(line => ByteString(line))
   .runWith(FileIO.toPath(clientBalanceOutputFile))
 ```
 
-In this case, our `Source` is a `Slick` query which emits elements (`Transactions`) downstream. It is important to note that this is a connector that comes from the `Alpakka project`, so it is compliant with the `Reactive Streams` especification. The rest of the `graph` is very simple. We perform operations in a way that is similar than working with collections (we reduce the transactions with a `fold` operation, then convert the result to a Bytestrig and finally sink it to a file).
+In this case, our `Source` is a `Slick` query which emits elements (`Transactions`) downstream. As we mentioned in the last section, it is important to note that this is a connector that comes from the `Alpakka project`, so it is compliant with the `Reactive Streams` especification. So we can connect it to our pipeline in order to have a full reactive `graph`. The rest of the `graph` is very simple. We perform operations in a way that is similar than working with collections (we reduce the transactions with a `fold` operation, then convert the result to a Bytestrig and finally sink it to a file).
 
 Imagine now that we are required to calculate the total amount of approved payments that were processed by every card brand. No problem, we can also implement this stuff using `Akka Streams`.
 
@@ -330,7 +337,7 @@ Slick
 
 In this case we start querying for approved transactions. Then, we group transactions by `card type` (aka: brand). It creates a `Substream` for every card brand and then we perform a fold operation on each of them in order to get the totals. After that, we merge all those substreams in order to comming back to the original graph by emit downstream all the totals we got and doing some formatting operations. Finally, we sink to a file.
 
-`Note:` in order to keep the example simple I used a tuple in the accumulator element of the `fold` operation inside the `Substream` instead of a more elaborated `zipWith` like operation.
+`Note:` in order to keep the example simple, I used a tuple in the accumulator element of the `fold` operation inside the `Substream`, instead of a more elaborated `zipWith` like operation.
 
 # Conclusion
 
