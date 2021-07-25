@@ -1,7 +1,7 @@
 ---
 title: Akka Streams Getting Started
 date: 2021-06-06 15:20:52
-excerpt: "What is Akka Streams and how to use it"
+excerpt: "Getting started with this amazing technology"
 categories:
   - blog
 tags:
@@ -255,31 +255,37 @@ val addOne: Flow[Int, Int, NotUsed] = Flow[Int].map(x => x + 1) // it emits no m
 val sinkToFile: Sink[ByteString, Future[IOResult]] = FileIO.toPath(Paths.get("result.txt")) // emits a file
 ```
 
-If every element can emit a materialized value, how we can decide which one to pick? In this case, the API is very flexible and it give us the possibility to chose what value to take. For that reason, it give us the following methods: `via`, `to`, `viaMat`, `toMat`.
+If every element can emit a materialized value, how we can decide which one to pick? In this case, the API is very flexible and it give us the possibility to chose what value to take. `Akka Streams API` give us the methods `via`, `to`, `viaMat`, `toMat` for connecting components together. Those methods especify which materialized value we will take.
 
-`TODO different materializations with examples`
-
-``` scala
-val result = Source(List("scala", "akka", "streams"))
-  .map(word => ByteString(s"$word\n"))
-  .runWith(FileIO.toPath(Paths.get("result.txt")))
-```
+`via` connects a `Source` with a `Flow` materializing the value of the `Source` (the left value).
 
 ``` scala
-val graph = sourceList
-  .via(addOne)
-  .via(cube)
-  .via(toLine)
-  .via(lineToBytes)
-  .toMat(sinkToFile)(Keep.right)    // we indicate we want to materialize the materialized value emitted by sinkToFile
-
-val result: Future[IOResult] = graph.run()
-
+val combinedSource: Source[ByteString, NotUsed] =
+  sourceList.via(convertToByteString) // materialize the value of sourceList (the left hand value) which is of type NotUsed
 ```
 
-Also, the `runWith` method (available on `Source`, `Flow` and `Sink`) takes an specific side depending of the component who calls it. For example: if it is called from a Source, it materializes the left value. If it's called from a `Sink`, it materializes the ...`TODO`. If its called from a `Flow`, it materializes both.
+`to` connects a `Source` with a `Sink` materializing the left hand value (the value of the Source).
 
-`TODO` complete this section
+``` scala
+val graph: NotUsed = combinedSource.to(sinkToFile).run() // materialize the left side value (the value of the source)
+```
+
+If you need more flexibility, you can use `viaMat` and `toMat` methods, which a allows more control of the materialized value by passing a function which defines what value to take:
+
+``` scala
+// via mat
+val combinedSource = sourceList.viaMat(addOne)((mat1, mat2) => mat2)
+
+// this example is equivalent to the previous one but using `Keep.left` function
+val combinedSourceKeepingLeft = sourceList.viaMat(addOne)(Keep.left)
+
+// toMat
+val result: Future[IOResult]] = combinedSource.toMat(sinkToFile)(Keep.right).run()
+```
+
+In the last example we choose to materialized the right hand value, so will get a file after running this stream.
+
+Also, the `runWith` method (available on `Source`, `Flow` and `Sink`) takes an specific side depending of the component who calls it. For example: if it is called from a Source, it materializes the `Sink` value. If it's called from a `Sink`, it materializes the `Source` value. If its called from a `Flow`, it materializes both.
 
 # Alpakka
 
