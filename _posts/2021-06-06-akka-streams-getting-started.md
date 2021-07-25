@@ -283,18 +283,55 @@ val result: Future[IOResult] = graph.run()
 
 # A minimal real world example
 
-Now that we have the basics of `Akka Streams`, it is time to see how we can use this tool to solve real world problems (a minimal one in this case, but we'll see another more elaborated example in the next post).
+Now that we know the basics of `Akka Streams`, it is time to see how we can use this tool to solve real world problems (some minimal examples in this case, but we'll see a more elaborated one in the next post).
 
-`TODO`
+Imagine that we work on a payment processor system which stores information about transactions that were made against credit card companies (e.g., VISA, AMEX, etc). It stores some info about the transaction, which include payment info and the operation result (e.g., approved, rejected). The following `case class` ilustrates our model:
 
 ``` scala
-Slick
-    .source(transactionTable.filter(t => t.email === "conception.hessel@gmail.com").result)
-    .fold(BigDecimal(0))((acc, tx) => tx.amount + acc)
-    .map(amount => ByteString(amount.toString()))
-    .runWith(FileIO.toPath(outputFile))
+case class Transaction(
+    id: Option[Long],
+    amount: BigDecimal,
+    cardNumber: String,
+    dateTime: String,
+    holder: String,
+    installments: Int,
+    cardType: String,
+    status: String,
+    email: String)
 ```
+Imagine that we are asked to retrieve the accumulated amount of an specific user by email. We can query the data base in a traditional way, loading all the result set in memory before calculating the total, but we can also do this in a streamed-buffered way which would made a more efficient use of resources. So, let's try to implement this requirement using `Akka Streams`.
+
+``` scala
+val clientBalanceOutputFile = Paths.get("client-balance.txt")
+
+Slick
+  .source(transactionTable.filter(t => t.email === "conception.hessel@gmail.com" && t.status === "approved").result)
+  .fold(BigDecimal(0))((acc, tx) => tx.amount + acc)
+  .map(amount => ByteString(amount.toString()))
+  .runWith(FileIO.toPath(clientBalanceOutputFile))
+```
+
+In this case, our `Source` is a `Slick` query which emits elements (`Transactions`) downstream. It is important to note that this is a connector that comes from the `Alpakka project`, so it is compliant with the `Reactive Streams` especification. The rest of the `graph` is very simple. We perform operations in a way that is similar than working with collections (we reduce the transactions with a `fold` operation, then convert the result to a Bytestrig and finally sink it to a file).
+
+Imagine now that we are required to calculate the total amount of approved payments that were processed by every card brand. No problem, we can also implement this stuff using `Akka Streams`.
+
+``` scala
+val brandBalanceOutputFile = Paths.get("brand-balance.txt")
+
+Slick
+  .source(transactionTable.filter(_.status === "approved").result)
+  .groupBy(10, _.cardType)
+  .fold((EMPTY_CARD_TYPE, BigDecimal(0)))((acc, tx) => (tx.cardType, tx.amount + acc._2))
+  .mergeSubstreams
+  .map(cardTypeAndTotal => s"cardType: ${cardTypeAndTotal._1}, total: ${cardTypeAndTotal._2}")
+  .map(line => ByteString(line + System.lineSeparator()))
+  .runWith(FileIO.toPath(brandBalanceOutputFile))
+```
+
+In this case we start querying for approved transactions. Then, we group transactions by `card type` (aka: brand). It creates a `Substream` for every card brand and then we perform a fold operation on each of them in order to get the totals. After that, we merge all those substreams in order to comming back to the original graph by emit downstream all the totals we got and doing some formatting operations. Finally, we sink to a file.
+
+`Note:` in order to keep the example simple I used a tuple in the accumulator element of the `fold` operation inside the `Substream` instead of a more elaborated `zipWith` like operation.
 
 # Conclusion
 
-In this tutorial we have seen what `Akka Stream` is and what problems it solves. However, some topics were missing, such as logging, error handling, stream lifecycle, testing and some operators. Those will be covered in future posts. Also, I want to write a dedicated one about working with `Graph DSL`, which is a powerful API that `Akka Streams` provide us in order to write no linear asynchronous pipelines. The sample code of this post is available on [GitHub](https://github.com/serdeliverance/akka-streams-demo).
+In this tutorial we have seen what `Akka Stream` is and what problems it solves. However, some topics were missing, such as logging, error handling, testing and some operators. Those topics will be covered in future posts. Also, I want to write a dedicated one about working with `Graph DSL`, which is a powerful API that `Akka Streams` provide us in order to write no linear asynchronous pipelines. The sample code is available on [GitHub](https://github.com/serdeliverance/akka-streams-demo).
