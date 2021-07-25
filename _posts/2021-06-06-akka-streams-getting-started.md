@@ -1,7 +1,7 @@
 ---
 title: Akka Streams Getting Started
 date: 2021-06-06 15:20:52
-excerpt: "What is Akka Streams and how to use it"
+excerpt: "Getting started with this amazing technology"
 categories:
   - blog
 tags:
@@ -13,7 +13,7 @@ header:
 
 # Intro
 
-Hi, everyone. There has been a long time from my last post. In this post, I want to introduce you to the `Akka Streams` library which I considered is an awesome and powerfull tool for writing asynchronous pipelines of data transformation. In this intro, I want to show you what `Akka Stream` is, what problems it solves, where it can be a good fit, what are its basic building blocks, an intro to the Alpakka project through a real world example.
+Hi, everyone. There has been a long time from my last post. In this post, I want to introduce you to the `Akka Streams` library which I considered is an awesome and powerfull tool for writing asynchronous pipelines of data transformation. In this intro, I want to show you what `Akka Stream` is, what problems it solves, where it can be a good fit, what are its basic building blocks, and an intro to the Alpakka project through a real world example.
 
 Before talking about Akka Streams, it is important to know what streams are.
 
@@ -199,14 +199,14 @@ val lineToBytes = Flow[String].map(line => ByteString(s"$line\n"))
 
 val sinkToFile = FileIO.toPath(Paths.get("result.txt"))
 
-val graph2 = sourceList
+val graph = sourceList
   .via(addOne)
   .via(cube)
   .via(toLine)
   .via(lineToBytes)
   .to(sinkToFile)
 
-graph2.run()
+graph.run()
 ```
 
 If we see that different sequences of transformations repeats frequently we can also create new reutilizable pieces (source, flow, sinks) by connecting them:
@@ -218,11 +218,11 @@ val numberConverter = addOne.via(cube).via(toLine)
 // combination of linetToBytes (flow) with sinkToFile, creating a new Sink.
 val sinkLineToFile: Sink[String, NotUsed] = lineToBytes.to(sinkToFile)
 
-val graph3 = sourceList
+val graph = sourceList
   .via(numberConverter)
   .to(sinkLineToFile)
 
-graph3.run()
+graph.run()
 ```
 
 So, you can see that is very easy to define reutilizable pieces. It is up to you to decide how to combine them and what fits better with your use case.
@@ -239,42 +239,112 @@ A `Materializer` is bringed into scope through the `ActorSystem`. So, having an 
 
 What happens inside a stream stays inside it.
 
-What I'm trying to say is that when running a stream there is no observable effect outside. The effectful part happends in the sink, which is the consumer side of the stream, but not in other places of the external world.
+What I'm trying to say is that when running a stream there is no observable effect outside. The effectful part happends in the Sink, which is the consumer side of the stream, but not in other places of the external world (if you sink to a DB, the change will be reflected on the DB, if you sink to a Kafka topic, that change will be reflected there but not somewhere).
 
 However, there are situations when you want the stream to give you some information regarding processing. In that case, you need a `Materialized value`.
 
 A `Materialized value` is an auxiliary value emitted from the stream to the outside world. It is a value that the stream "expose" to us when running.
 
-Every graph component (Source, Flow and Sink) can materialize values. The type of the materialized value a component can emit is indicated by its last type parameter. Example:
+Every graph component (Source, Flow and Sink) can emit materialized values. The type of the materialized value that a component can emit is indicated by its last type parameter. Example:
 
 ``` scala
-val sourceList: Source[Int, NotUsed] = Source(1 to 1000)      // emits no value to the external world
+val sourceList: Source[Int, NotUsed] = Source(1 to 1000)      // it emits no meaningful value to the external world
 
-val addOne: Flow[Int, Int, NotUsed] = Flow[Int].map(x => x + 1) // emits no value to the external world
+val addOne: Flow[Int, Int, NotUsed] = Flow[Int].map(x => x + 1) // it emits no meaningful value to the external world
 
 val sinkToFile: Sink[ByteString, Future[IOResult]] = FileIO.toPath(Paths.get("result.txt")) // emits a file
 ```
 
-If every element can emit a materialized value, how can we decide which one to pick? By default, between two contiguous components, the materialized value of the component who is nearest to the source is taken. Example:
+If every element can emit a materialized value, how we can decide which one to pick? In this case, the API is very flexible and it give us the possibility to chose what value to take. `Akka Streams API` give us the methods `via`, `to`, `viaMat`, `toMat` for connecting components together. Those methods especify which materialized value we will take.
+
+`via` connects a `Source` with a `Flow` materializing the value of the `Source` (the left value).
 
 ``` scala
-val result = Source(List("scala", "akka", "streams"))
-  .map(word => ByteString(s"$word\n"))
-  .runWith(FileIO.toPath(Paths.get("result.txt")))
+val combinedSource: Source[ByteString, NotUsed] =
+  sourceList.via(convertToByteString) // materialize the value of sourceList (the left hand value) which is of type NotUsed
 ```
+
+`to` connects a `Source` with a `Sink` materializing the left hand value (the value of the Source).
 
 ``` scala
-val graph = sourceList
-  .via(addOne)
-  .via(cube)
-  .via(toLine)
-  .via(lineToBytes)
-  .toMat(sinkToFile)(Keep.right)    // we indicate we want to materialize the materialized value emitted by sinkToFile
-
-val result: Future[IOResult] = graph2.run()
-
+val graph: NotUsed = combinedSource.to(sinkToFile).run() // materialize the left side value (the value of the source)
 ```
+
+If you need more flexibility, you can use `viaMat` and `toMat` methods, which a allows more control of the materialized value by passing a function which defines what value to take:
+
+``` scala
+// via mat
+val combinedSource = sourceList.viaMat(addOne)((mat1, mat2) => mat2)
+
+// this example is equivalent to the previous one but using `Keep.left` function
+val combinedSourceKeepingLeft = sourceList.viaMat(addOne)(Keep.left)
+
+// toMat
+val result: Future[IOResult]] = combinedSource.toMat(sinkToFile)(Keep.right).run()
+```
+
+In the last example we choose to materialized the right hand value, so will get a file after running this stream.
+
+Also, the `runWith` method (available on `Source`, `Flow` and `Sink`) takes an specific side depending of the component who calls it. For example: if it is called from a Source, it materializes the `Sink` value. If it's called from a `Sink`, it materializes the `Source` value. If its called from a `Flow`, it materializes both.
+
+# Alpakka
+
+[Alpakka project](https://doc.akka.io/docs/alpakka/current/) is an open source iniciative for creating connectors that are compliant with `Reactive Streams` specification and that allow us to create reactive integration pipelines. Those connectors are built on top on `Akka Streams` so they can together very easily.
+
+Alpakka project offers reactive connectors for different technologies such as Kafka, JMS, Slick, AWS services (e.g., Kinesis, DynamoDB, etc), Google Cloud Services, among others. In the next section we'll use the [Slick connector](https://doc.akka.io/docs/alpakka/current/) in order to define a graph that streams JDBC query result set downstream.
+
+# A minimal real world example
+
+Now that we know the basics of `Akka Streams`, it is time to see how we can use this tool to solve real world problems (some minimal examples in this case, but we'll see a more elaborated one in the next post).
+
+Imagine that we work on a payment processor system which stores information about transactions that were made against credit card companies (e.g., VISA, AMEX, etc). It stores some info about the transaction, which include payment info and the operation result (e.g., approved, rejected). The following `case class` ilustrates our model:
+
+``` scala
+case class Transaction(
+    id: Option[Long],
+    amount: BigDecimal,
+    cardNumber: String,
+    dateTime: String,
+    holder: String,
+    installments: Int,
+    cardType: String,
+    status: String,
+    email: String)
+```
+Imagine that we are asked to retrieve the accumulated amount of an specific user by email. We can query the data base in a traditional way, loading all the result set in memory before calculating the total, but we can also do this in a streamed-buffered way which would made a more efficient use of resources. So, let's try to implement this requirement using `Akka Streams`.
+
+``` scala
+val clientBalanceOutputFile = Paths.get("client-balance.txt")
+
+Slick
+  .source(transactionTable.filter(t => t.email === "conception.hessel@gmail.com" && t.status === "approved").result)
+  .fold(BigDecimal(0))((acc, tx) => tx.amount + acc)
+  .map(amount => amount.toString)
+  .map(line => ByteString(line))
+  .runWith(FileIO.toPath(clientBalanceOutputFile))
+```
+
+In this case, our `Source` is a `Slick` query which emits elements (`Transactions`) downstream. As we mentioned in the last section, it is important to note that this is a connector that comes from the `Alpakka project`, so it is compliant with the `Reactive Streams` especification. So we can connect it to our pipeline in order to have a full reactive `graph`. The rest of the `graph` is very simple. We perform operations in a way that is similar than working with collections (we reduce the transactions with a `fold` operation, then convert the result to a Bytestrig and finally sink it to a file).
+
+Imagine now that we are required to calculate the total amount of approved payments that were processed by every card brand. No problem, we can also implement this stuff using `Akka Streams`.
+
+``` scala
+val brandBalanceOutputFile = Paths.get("brand-balance.txt")
+
+Slick
+  .source(transactionTable.filter(_.status === "approved").result)
+  .groupBy(10, _.cardType)
+  .fold((EMPTY_CARD_TYPE, BigDecimal(0)))((acc, tx) => (tx.cardType, tx.amount + acc._2))
+  .mergeSubstreams
+  .map(cardTypeAndTotal => s"cardType: ${cardTypeAndTotal._1}, total: ${cardTypeAndTotal._2}")
+  .map(line => ByteString(line + System.lineSeparator()))
+  .runWith(FileIO.toPath(brandBalanceOutputFile))
+```
+
+In this case we start querying for approved transactions. Then, we group transactions by `card type` (aka: brand). It creates a `Substream` for every card brand and then we perform a fold operation on each of them in order to get the totals. After that, we merge all those substreams in order to comming back to the original graph by emit downstream all the totals we got and doing some formatting operations. Finally, we sink to a file.
+
+`Note:` in order to keep the example simple, I used a tuple in the accumulator element of the `fold` operation inside the `Substream`, instead of a more elaborated `zipWith` like operation.
 
 # Conclusion
 
-In this tutorial we have seen what `Akka Stream` is and what problems it solves. However, some topics were missing, such as logging, error handling, stream lifecycle, testing and some operators. Those will be covered in future posts. Also, I want to write a dedicated one about working with `Graph DSL`, which is a powerful API that `Akka Streams` provide us in order to write no linear asynchronous pipelines.
+In this tutorial we have seen what `Akka Stream` is and what problems it solves. However, some topics were missing, such as logging, error handling, testing and some operators. Those topics will be covered in future posts. Also, I want to write a dedicated one about working with `Graph DSL`, which is a powerful API that `Akka Streams` provide us in order to write no linear asynchronous pipelines. The sample code is available on [GitHub](https://github.com/serdeliverance/akka-streams-demo).
