@@ -76,11 +76,11 @@ Streams are similar to producer-consumer architectures, where elements are emitt
 
 ![slow producer fast consumer]({{ site.baseurl }}/assets/images/akka-streams/sonic-slow-producer-fast-consumer.png "Slow Producer, Fast Consumer")
 
-The first scenario is acceptable. There's no problem having a slow consumer. In that case, at least the consumer will be idle, but there's no buffer overflow risk.
+The first scenario is acceptable. There’s no problem having a slow producer. In that case, at least the consumer will be idle, but there’s no buffer overflow risk.
 
 ![fast producer slow consumer]({{ site.baseurl }}/assets/images/akka-streams/sonic-fast-producer-slow-consumer.png "Fast Producer, Slow Consumer")
 
-However, the second scenario is something we want to be cared about. If we have a fast consumer and a slow consumer, it will lead to a situation where the consumer's buffer got overflowed. `Back-pressure` comes to solve this problem.
+However, the second scenario is something we want to be cared about. If we have a fast producer and a slow consumer, it will lead to a situation where the consumer's buffer got overflowed. `Back-pressure` comes to solve this problem.
 
 `Back-pressure` is a flow-control mechanism where the consumer signals the producer with the amount of elements it is able to handle. In order words, it is a comunication from consumer to producer, where the first one signals the demand it can process. That way, producers can adjust their rate of emitting elements.
 
