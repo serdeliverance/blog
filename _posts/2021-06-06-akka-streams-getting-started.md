@@ -67,7 +67,7 @@ On the other hand, `Reactive Systems` is a more broader topic. It is about build
 
 Now, we are more clear about what `Akka Stream` is, but before diving into its API, we need to talk about `Back pressure`
 
-# Back pressure
+# Backpressure
 
 Streams are similar to producer-consumer architectures, where elements are emitted by a producer and consumed by consumers. In those arquitectures, we can lead to the following scenarios:
 
@@ -88,8 +88,8 @@ However, the second scenario is something we want to be cared about. If we have 
 
 It's important to mention that all this comunication between producers and consumers is asynchronous.
 
-In a backpressure scenario, the with the amount of message (demand) the consumer is able to handle. To accomplish that the producer can implement one of the following strategies:
-* stopping emitting message (if possible)
+In a backpressure scenario, the producer is signaled with the amount of messages (demand) the consumer is able to handle. In order to accomplish it, the producer can implement one of the following strategies:
+* stopping emitting messages (if possible)
 * buffering elements until suscriber signals that more elements can be emitted
 * dropping elements
 * tear down the stream if none of the previous strategies could be applied.
