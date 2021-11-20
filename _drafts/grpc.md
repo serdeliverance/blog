@@ -72,6 +72,10 @@ Protocol buffers tiene dos componentes fundamentales:
 
 # Error handling
 
+Para manejo de errores
+
+En el caso de `Akka Grpc`, la gran documentación de akka nos provee de ejemplos de cómo [modelar respuestas de error](https://doc.akka.io/docs/akka-grpc/current/server/details.html#status-codes) y también nos provee una planilla de [status codes estandard](https://github.com/grpc/grpc/blob/master/doc/statuscodes.md) para tener en cuenta.
+
 # Versioning
 
 # Useful tools
