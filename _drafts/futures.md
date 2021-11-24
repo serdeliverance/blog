@@ -1,7 +1,7 @@
 ---
-title: Futures
-date: 2021-03-29 23:00:00
-excerpt: 'An introduction to Futures'
+title: Futures 101
+date: 2021-11-24 09:00:00
+excerpt: 'An intro to Future and how to use it in the real world'
 categories:
   - blog
 tags:
@@ -83,6 +83,8 @@ getAllPayments()  // you go to database to retrieve all payments. So, it returns
   .map(payments => payments.sum) // you have the List in memory at this point, you not require a future, just map and operate with the list
 ```
 
-* Don't
-
 * Don't use `Thread.sleep` (I know, it is not specific from `Future`, but it is important to be mentioned). A `Thread` is a valuable resource and when you do this, what you are doing is blocking a `Thread`, leaving it unavailable for doing some meaningful processing (the `Thread` is doing nothing during this time, and it could be doing something more useful)
+
+* Don't use `await` unless it is really needed. The same as the previous point, you are blocking a thread (in this case, the current one) until the computation is completed.
+
+* Avoid using `onComplete`.... `TODO explain more`
