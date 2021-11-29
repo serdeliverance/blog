@@ -12,33 +12,23 @@ header:
 
 # Intro
 
-# Values and Computations
-
-In Scala (and also in Functional Programming languages) what we usually do is evaluating expressions:
+# Use case
 
 ``` scala
-val result = 3 + 3
-```
-
-or some more elaborated expressions:
-
-``` scala
-val total = products.sum(_.price)
-```
-
-And it is ok. All of this operations happend in memory and the processor can deal with them almost instantly because all the info it requires this computation is in memory. However, imagine you are building the checkout of an e-commerce system. So, we have the shopping cart and we need to implement the following flow:
-
-
-``` scala
-def checkout(userId: Int, cardData: CardData) = {
-  // 1. validate credit card data
-  // 2. retrieve the user's shopping cart from redis
-  // 3. validate shopping cart data
-  // 4. send payment info to credit card company to authorize the payment
-  // 5. store the transaction result in your data base
-  // 6. return response to the user
+def processPayment(payment: Payment) = {
+  // 1. send to credit card
+  // 2. store transaction result
+  // 3. adding billing
 }
 ```
+
+# Asynchrony
+
+`TODO definition of asynchrony`
+
+# Concurrency vs Parallelism
+
+`TODO definition`
 
 # Traditional sync/block mechanism
 
@@ -53,25 +43,67 @@ Disadvantages:
 
 - very low level primitive
 - not composable
-- tend to be used with shared memory, so race conditions and deadlocks are more lickely to happend
+- tend to be used with shared memory, so race conditions can arise
+- because of the previous one, also deadlocks are more likely to happend
 
-# Future
+# Another approach for implementing concurrency
 
-# Where does Future comes from?
-
-# Future under the hood
-
-# API and basic operations
+`TODO where future come from?`
 
 # Execution context
 
+# Future
+
+# API and basic operations
+
+# Sequencing computations
+
+# Error handling (Future recover and recoverWith)
+
+The same example as the beginning, but adding recover with on billing callback if it fails:
+
+``` scala
+def processPayment(payment: Payment) = {
+  // 1. send to credit card
+  // 2. store transaction result
+  // 3. adding billing => WITH RECOVER!! (it should update the transaction)
+}
+```
+
+# Refactoring our code using Futures
+
+# Extending future
+
+`TODO retry`
+
+`TODO traversal`
+
+# Testing Future
+
 # The ugly of Future (an intro)
+
+- exception based API
+- also, modeling errors through exceptions is not descriptive enough (we could implement a hierarchy of custom exceptions but It is not a functional programming approach)
+- Futures are eager evaluated, when declared, the async computation is already schedule and fired. So, they are not referential transparent
+- Not important now, but a Future has a correspondence with a SO thread.
 
 # How to solve it
 
-# Adding more useful methods
+The way futures work at low level (SO threads for example) is something that is out of our control. However, we can improve the way we work with Future at a Higher Level/End user API using some functional programming ideas.
 
-# More extentions on Future
+## EitherT
+
+`TODO`
+
+Advantages:
+
+- rich error semantics: we model errors as values using ADT which give us more detail about the error
+- sequencing and shortcircuiting
+- just sequence operations, let frameworks to the rest.
+
+Disadvantages:
+
+- run parallel task must require to fire a future from another
 
 # Best practices recommendations
 
@@ -87,4 +119,4 @@ getAllPayments()  // you go to database to retrieve all payments. So, it returns
 
 * Don't use `await` unless it is really needed. The same as the previous point, you are blocking a thread (in this case, the current one) until the computation is completed.
 
-* Avoid using `onComplete`.... `TODO explain more`
+* Avoid using `onComplete`: 99 percent of the times with `map` and `flatMap` you would be Ok. You won't be required to use `onComplete` callbacks
