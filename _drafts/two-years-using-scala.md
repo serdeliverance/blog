@@ -53,6 +53,12 @@ Enough talking about myself, let's review some points about the Scala language a
 
 `TODO async with Futures`
 
+`TODO Typeclasses`
+
+`TODO IO`
+
+`TODO Akka`
+
 The idea when creating `Scala` was to be a mix between `OOP` and `functional programming`, taking the best of both worlds and taking advantage of the rich set of libraries and frameworks of the `JVM` ecosystem. I think this goal was achieved. The language is very flexible and elegant.
 
 ## Community
@@ -65,7 +71,7 @@ At a first sight I could identify four `Scala` schools: the Odersky's one, Typel
 
 Martin Odersky is the creator of the `Scala` language, and this school follows his idea: having a mix between `OOP` and `Functional Programming`. I think his vision was achieved and the language itself is awesome. Things like inmutability, lazy evaluation, case classes, traits, implicits (without abusing of them), the collections API, monads and for comprehensions, and Futures are simply great and you can solve a wide number of problems in a very elegant way using them. Additionally, you have Akka and Play, which gives you more tools for implement high performance services and introduce you to different concurrency models (CPS, Actors, Streaming, Distributed programming).
 
-I think diving into this approach is the easiest way to learn `Scala`. Also, learning the `Lightbend stack` (`Akka`, `Akka Cluster`, `Akka Streams`, etc) gives you lots of insights about architecture and design. Because of that, it is not strange that [big companies](https://www.lightbend.com/case-studies), such as `Pay Pal`, `Wallmart`, `MOIA`, `Tesla` or `Tubi` choose those technologies.
+I think diving into this approach is the easiest way to learn `Scala`. Also, learning the `Lightbend stack` (`Akka`, `Akka Cluster`, `Akka Streams`, etc) gives you lots of insights about architecture and design. Because of that, it is not strange that [big companies](https://www.lightbend.com/case-studies), such as `Pay Pal`, `Wallmart`, `MOIA`, `Tesla`, `Tubi` or even [Fortnite](https://www.lightbend.com/blog/akka-powers-400-million-users-streaming-gaming-entertainment) choose those technologies.
 
 However, given the flexibility of `Scala` plus the rich and solid `JVM` ecosystem, new approaches has been emerged. Many of them are very influenced by `Haskell` and try to implement pure functional programming on the `JVM`.
 
@@ -108,7 +114,19 @@ Summarizing, I think that having different ways of thinking is also a bless beca
 
 `TODO intellij`
 
+`TODO metals`
+
 ## Frameworks and Libraries
+
+`TODO Cats/Cats Effect`
+
+`TODO ZIO`
+
+`TODO Akka`
+
+`TODO Play Framework`
+
+`TODO Spark`
 
 ## Next steps in my journey
 
@@ -116,6 +134,8 @@ Nowadays, I'm enjoying so much doing katas in `Scala`, using `tail recursion` an
 and reading/experimenting with the [IO monad from Cats Effect](https://typelevel.org/cats-effect/docs/concepts) (in spite of not being a fan of `Tagless Final`, I really love the IO monads from Cats and really want to know more about it).
 
 Also, I always try to watch conferences and beign up to date with the community on their different channels.
+
+In my roadmap, there are more things to learn: such as [Scala 3](https://docs.scala-lang.org/scala3/new-in-scala3.html), [Ammonite](https://ammonite.io/), [Scalajs](https://www.scala-js.org/) and some [Spark](https://spark.apache.org/docs/latest/quick-start.html).
 
 ## Conclusions
 
