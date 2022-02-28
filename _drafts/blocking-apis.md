@@ -1,4 +1,13 @@
-Blocking and non-blocking
+---
+title: 'Blocking APIs'
+excerpt: 'How to work with blocking APIs'
+categories:
+  - blog
+tags:
+  - scala
+header:
+  image: '/images/header.jpg'
+---
 
 # Intro
 
@@ -25,7 +34,9 @@ Recently, I have to deal with a blocking API (`jedis`, more preciselly its `subs
 
 # Conclusions
 
-# ------------ Lo que sigue son notas mías
+# ---------------------------------
+# Notas mias
+# ---------------------------------
 
 # Ejemplos
 
