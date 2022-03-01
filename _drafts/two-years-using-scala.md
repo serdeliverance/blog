@@ -11,19 +11,19 @@ header:
 
 ## Intro
 
-It's been more than a two years since I started learning Scala. So, I think it's a good time to review my journey and share my thoughts about this awesome language and its ecosystem.
+It's been more than a two years since I started learning `Scala`. So, I think it's a good time to review my journey and share my thoughts about this awesome language and its ecosystem.
 
 ## My journey
 
-My first contact with Scala was through the book `Functional Programming in Scala` (aka `The Red Book`). With that book I learned some functional programming ideas and basic Scala syntax. I must confess that reading it was very challenging for me. The exercises were difficult and makes you think over them for a while until you came up with the solution (If you could).
+My first contact with `Scala` was through the book `Functional Programming in Scala` (aka `The Red Book`). With that book I learned some functional programming ideas and basic `Scala` syntax. I must confess that reading it was very challenging for me. The exercises were difficult and makes you think over them for a while until you came up with the solution (If you could).
 
 However, at some point of the reading I thought that It was over complicated and I started considering learning from another resource. So, I came out with some Akka related Udemy courses. I had a great experience learning Akka basics, some Akka Persistence stuff, but learning Akka Streams simply blowed my mind. Writing async pipelines were awesome and I felt in love with Stream processing, in general, and Akka Streams and Alpakka, in particular.
 
-After that, I got my first job as a Scala developer, and I started learning more about `Play Framework` and I had my first contact with `Typelevel libraries`, such as `Cats` and `Circe`.
+After that, I got my first job as a `Scala` developer, and I started learning more about `Play Framework` and I had my first contact with `Typelevel libraries`, such as `Cats` and `Circe`.
 
 In my free time I continued reading some books. I read `Scala Essentials`, `Scala with Cats` and I've tried to develop some applications using just the `Typelevel stack` (`Cats`, `Http4s`, `Doobie`, etc) but I've never succeeded. Until now I still think that `Typelevel` ecosystem is very challenging and over complicated. I will not deny that the way of reasoning about effects and developing an app just with pure functions is very interesting and that has its benefits (for example, in testing), but I think the learning curve is very sharp and I don't know if it's really worth it. However, something is true: I'll continue playing around with it. I know that at some point it will make more sense to me.
 
-Enough talking about myself, let's review some points about the Scala language and it's ecosystem.
+Enough talking about myself, let's review some points about the `Scala` language and it's ecosystem.
 
 ## Language
 
@@ -92,7 +92,7 @@ Typelevel has a lot of resources to learn and its community is very active. Read
 
 ### ZIO
 
-The [ZIO](https://zio.dev/) community is reaching lot of traction during the last couple of years. `ZIO` is an effect system for asynchronous computations, whose approach is to use idiomatic scala code without abusing of implicits and type classes. Its entry barrier is very low compared with the `Cats` one. Also, you can see a `ZIO` as a `Future` with steroids.
+The [ZIO](https://zio.dev/) community is reaching lot of traction during the last couple of years. `ZIO` is an effect system for asynchronous computations, whose approach is to use idiomatic `Scala` code without abusing of implicits and type classes. Its entry barrier is very low compared with the `Cats` one. Also, you can see a `ZIO` as a `Future` with steroids.
 
 Its community is very active and charmfull. The ZIO vision is to provide libraries for writting `Pure Functional` and concurrent programs using idiomatic `Scala`. I hope I will try ZIO this year.
 
