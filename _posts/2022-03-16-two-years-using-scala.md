@@ -129,9 +129,9 @@ This new version brings features to the `Type System` (such as `Union` and `Inte
 
 ## Next steps in my journey
 
-Because of the things that I've mentioned in the previous section, I'm thinking seriously in giving `Scala` a rest for a while and start studying other topics and then come back again to see how these new features were adopted (actually, I'm studying `Node`, `Nestjs` and some `Clean Architecture` stuff).
+Because of the things that I've mentioned in the previous section, I'm thinking seriously in giving `Scala` a rest for a while and start studying other topics and then come back again to see how these new features were adopted (actually, It could be a great time to learn more about `Nodejs`, `Nestjs` and some `Clean Architecture` stuff).
 
-However, I'll keep doing katas in `Scala`. In the future, I think I'll focuse on `Scala 3`, `ZIO` and `Akka Cluster`.
+However, I'll keep doing katas in `Scala`. In the future, I think I'll focus on `Scala 3` (trying to choose the features that makes sense for writting code that is clean and easy to understand), `ZIO` and `Akka`.
 
 ## Conclusions
 
