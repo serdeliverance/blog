@@ -14,22 +14,21 @@ header:
 
 It's been more than a two years since I started learning `Scala`. So, I think it's a good time to review my journey and share my thoughts about this awesome language and its ecosystem.
 
+`Disclaimer`: I'm a traditional backend developer that have no knowledge about `Spark`, so I won't review it in this post. I hope I'll do in the future.
+
 ## My journey
 
-My first contact with `Scala` was through the book `Functional Programming in Scala` (aka `The Red Book`). That book helped me to learn some functional programming ideas and basic `Scala` syntax. Some months after start reading it, I realized it was not the best way to getting started with the language (it was extremely challenging). However,their exercises are very difficult and makes you think over them for a while until you came up with the solution.
+My first contact with `Scala` was through the book [Functional Programming in Scala](https://www.manning.com/books/functional-programming-in-scala) (aka `The Red Book`). That book helped me to learn some functional programming ideas and basic `Scala` syntax. Some months after reading it, I realized it was not the best way to getting started with the language (it was extremely challenging). Their exercises were very difficult and makes you think over them for a while until you came up with the solution.
 
-I must confess I never finished that book, but it gives me a good taste of the `Scala` syntax, so my next resource where [Akka Essentials with Scala Udemy's course](https://www.udemy.com/course/akka-essentials/) by `Rock the JVM`. This course was awesome and I had a great time learning the `Akka` basics, some `Akka Persistence` stuff and `Akka Streams`. This last one, simply blows my mind. Writing async pipelines were awesome and I felt in love with Stream processing, in general, and Akka Streams and Alpakka, in particular.
+I must confess I never finished that book, but it gives me a good taste of the `Scala` syntax. My next resource was [Akka Essentials with Scala Udemy's course](https://www.udemy.com/course/akka-essentials/) by `Rock the JVM`. This course was awesome and I had a great time learning from it. Then I continued with the `Akka Persistence` and the `Akka Streams` courses from the same author. That last one, simply blows my mind. Writing async pipelines were awesome and I felt in love with Stream processing, in general, and Akka Streams and Alpakka, in particular.
 
-I strongly recommend diving a little bit into `Àkka` and `Akka Streams`, because I think that learning actors concurrency model and stream processing that simply opens your mind to new solutions.
+I strongly recommend diving a little bit into `Àkka` and `Akka Streams`, because I think that learning actors concurrency model and stream processing simply opens your mind to new solutions.
 
 After that, I got my first job as a `Scala` developer, and I started learning more about `Play Framework` and I had my first contact with `Typelevel libraries`, such as `Cats` and `Circe`.
 
-I continued reading some books in my free time . I read `Scala Essentials`, `Scala with Cats` and I've tried to develop some applications using just the `Typelevel stack` (`Cats`, `Http4s`, `Doobie`, etc) but I've never succeeded. Until now I still think that `Typelevel` ecosystem is very challenging and over complicated.
+Also, I continued reading some books in my free time . I read `Scala Essentials`, `Scala with Cats` and I've tried to develop some applications using just the `Typelevel stack` (`Cats`, `Http4s`, `Doobie`, etc) but I've never succeeded. Until now I still think that `Typelevel` ecosystem is very challenging and over complicated.
 
 In the last couple of months, I've been studying `ZIO` and `Scala 3`.
-
-Lastly, I'm a traditional backend developer that have no knowledge about `Spark`, so, I won't mention it on this post. I hope I will do in the future.
-
 
 ## Language
 
