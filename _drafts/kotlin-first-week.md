@@ -20,3 +20,5 @@ After watching [this awesome talk](https://www.youtube.com/watch?v=X1RVYt2QKQE&t
 ## Functions
 
 ## Extension functions
+
+## Concurrency
