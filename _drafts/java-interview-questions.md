@@ -15,44 +15,68 @@ Some week ago, a friend asked me for a mock interview in `Java`. Given that I us
 
 ## Questions
 
-//// Temporal
+1. What is `Big O Notation`? What it is useful for?
 
-- Big O notation
-- Collections (array list, linked list, set)
-- Map, Hashmap
-- OOP: qué es? polimorfismo, herencia vs interfaces
-- SOLID
-- Patrones de diseño
-- Layered arch
-- Bases de datos relacionales
-- Checked vs unchecked exceptions
+2. What is the `Collection framework`? Which interfaces do you know?
 
-- JDBC
-- ORM
+3. What is `List`? What it is useful for?
 
-- Spring
-- Spring Boot
+4. Which is the difference between `ArrayList` and `LinkedList`? Which are their use cases?
 
-- Java 8, optional, streams
+5. Which is `Set`? How it differ from `List`?
 
-- Ejercicio Optional
-- Ejercicio Streaming
+6. Name some `Set` implementations and which particularities they have.
 
-- Ejercicio smells
+7. Which is a `Map`? Is it a kind of collection?
 
-- Threads: qué son? cómo se crean?
+8. Which `Map` implementations do you know? Where do you use each one?
 
-- Microservicios
+9. How `HashMap` is implemented?
 
-- Testing: unit, unit vs integration, e2e (usaste TDD?)
+10. What is `OOP`?
 
-- Misc:
+11. What is `polymorphism`?
 
-  - Docker
-  - Chean Arch
+12. `inheritance` vs `interfaces`. Why `interfaces` are so popular in `Java`?
 
-//// Temporal
+13. `interfaces` vs `abstract` classes. In which aspect they are different? When would you use an `abstract class`?
 
-## Conclusions
+14. What is `SOLID`?
 
-These were the questions I consider any `Java` developer that takes seriously this profesion must know.
+15. What is a `Design Pattern`? Name some patterns you know.
+
+16. Explain what is the `N-tier Architecutre`.
+
+17. Explain `Dependency Injection`
+
+18. Relation databases. What are their main characteristics? Which engines do you know?
+
+19. Do you know any No-relational database?
+
+20. `Checked` vs `Unchecked` exceptions. Which are their difference? When do you use each one?
+
+21. What is `JDBC`?
+
+22. Which is an `ORM`? What `ORM` do you know?
+
+23. What is `Spring`?
+
+24. What is `Spring Boot`? What are their advantages and which problem it tries to solve?
+
+25. Do you know `Optional`? Why it is useful?
+
+26. Explain `Java Streams`. What they are useful for?
+
+27. What are `Threads`? What they are useful for? How can you create a `Thread`?
+
+28. Explain `ExecutorService`.
+
+29. Explain what you know about `Microservices Architecture`.
+
+31. Explain what is `Unit Testing`. Which other kinds of tests you know?
+
+32. Have you used `TDD`?
+
+33. What is `Docker`? Do you have the chance to use it?
+
+34. `TODO TODO TODO TODO` Exercise smells
