@@ -18,11 +18,11 @@ header:
 
 Architects have an important role. They have to assure that the technical effort of the team is alligned with the technical vision. Because of that, it is important to define the Strategy, Principles and Practices.
 
-Strategy:
+Strategy: `TODO TODO TODO TODO`
 
-Principles: 
+Principles: `TODO TODO TODO TODO`
 
-Practices:
+Practices: `TODO TODO TODO TODO`
 
 Architects use to work on a higher level, but they don't have to leave coding at all. It is important that they continue doing that even through pair programming from time to time.
 
