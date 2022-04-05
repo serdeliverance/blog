@@ -30,4 +30,8 @@ Another important subject is that an architect should guide the team towards the
 
 # Chapter 03 - How to model services
 
+bounded context permite agrupar objetos/modelos dentro de una misma boundary, y compartir modelos en comun a través de shared modules.
+
+permiten bajo acoplamiento entre servicios, y alta cohesión dentro de los límites de un context bound.
+
 # Conclusion
