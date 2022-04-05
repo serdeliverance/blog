@@ -50,9 +50,9 @@ Some week ago, a friend asked me for a mock interview in `Java`. Given that I us
 
 17. Explain `Dependency Injection`
 
-18. Relation databases. What are their main characteristics? Which engines do you know?
+18. Relational databases. What are their main characteristics? Which engines do you know?
 
-19. Do you know any No-relational database?
+19. Do you know any NoSQL database?
 
 20. `Checked` vs `Unchecked` exceptions. Which are their difference? When do you use each one?
 
