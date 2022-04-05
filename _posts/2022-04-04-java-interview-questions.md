@@ -12,7 +12,7 @@ header:
 
 ## Intro
 
-Some week ago, a friend asked me for a mock interview in `Java`. Given that I used to take those kind of interview in the past, I think it will be a great opportuniy to organize some ideas about it and putting it into this post.
+Some week ago, a friend asked me for a mock interview in `Java`. Given that I used to take those kinds of interview in the past, I think it will be a great opportuniy to organize some ideas and putting it into this post.
 
 ## Questions
 
