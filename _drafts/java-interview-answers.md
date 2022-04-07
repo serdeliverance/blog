@@ -78,6 +78,16 @@ header:
 
 `REST` is an architectural style that tries to see the web a bunch of resources that are served. It relies on `HTTP` and takes verbs from it (for example: `GET`, `PUT  `, `POST` and `DELETE`) in order to define how a server is accesed and the resource/operations it is allowed to provide to costumers. Also, there are different way of do rest that can be found in [Richardson Maturity Model](https://martinfowler.com/articles/richardsonMaturityModel.html)
 
+When defining an `API`, we say that it is `Restful` if it follows the rest style. For example, having a resource called `products` (which represents products in a e-commerce site, for example), we can apply `Restful` defining the following endpoints:
+
+- `GET /products`: retrieves all the products
+
+- `PUT /products/:id`: updates the product with the specified id
+
+- `POST /products`: creates a product
+
+- `DELETE /products/:id`: deletes the product with the specified id
+
 32. Explain what you know about `Microservices Architecture`.
 
 33. Explain what is `Unit Testing`. Which other kinds of tests you know?
