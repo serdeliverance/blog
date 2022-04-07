@@ -21,6 +21,16 @@ Problems:
 
 - shorcuts and broken windows: its is easier to reference persistence components from the web layer and when you start doing that is a one way travel.
 
+## Importante Design principles from OOP
+
+- SRP: the `Single Resposibility Principle`. We use to associate this principle with the following sentence: `SRP is when every component has just one reposibility`. However, it is crucial to interpret this principle in a different way: `SRP means that a component just have one reason to change`
+
+- Dependency Inversion: it is the mechanisim that allow us to change de dependency direction. So, using it properly, we can make our domain infrastructure agnostic, because the dependecy direction comes from outside to the inner layers (domain) of our app.
+
 ## Inverting Dependencies
+
+## Different layers
+
+## Application Example
 
 ## Conclusions

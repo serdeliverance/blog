@@ -70,17 +70,21 @@ Some week ago, a friend asked me for a mock interview in `Java`. Given that I us
 
 27. What are `Threads`? What they are useful for? How can you create a `Thread`?
 
-28. Explain `ExecutorService`.
+28. What does the keyboard `volatile`?
 
-29. Have you ever use `CompletableFuture`?
+29. Explain `ExecutorService`.
 
-30. Explain what you know about `Microservices Architecture`.
+30. Have you ever use `CompletableFuture`?
 
-31. Explain what is `Unit Testing`. Which other kinds of tests you know?
+31. What is `REST`? Explain the `REST style` of defining resources?
 
-32. Have you ever used `TDD`?
+32. Explain what you know about `Microservices Architecture`.
 
-33. What is `Docker`? Do you have the chance to use it?
+33. Explain what is `Unit Testing`. Which other kinds of tests you know?
+
+34. Have you ever used `TDD`?
+
+35. What is `Docker`? Do you have the chance to use it?
 
 ## Conclusions
 
