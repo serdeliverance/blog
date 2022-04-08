@@ -55,4 +55,15 @@ Orchestration vs Choreogrphyc
 
 - choreographyc está mas basado en eventos. los microservicios se mantienen desacoplados. Como desventaja, puede decirse que el flujo de negocio no es facil de ver a primera vista. Esto implica, que se requiere más esfuerzo de monitoring y tracking
 
+Rest
+
+- Rest sobre HTTP brinda muchas facilidades y una semantica clara. A su vez, al correr sobre HTTP se tienen mucho tooling para diferentes propositos (caching, analisis de trafico, monitoreo, seguridad).
+
+
+## TODO
+
+- investigar [mod_proxy](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html) (for rest)
+- investigar [Varnish](https://varnish-cache.org/) (for rest)
+- [rest maturity model](https://martinfowler.com/articles/richardsonMaturityModel.html)
+
 # Conclusion
