@@ -122,5 +122,7 @@ No obstante, este approach tiene downsides en cuanto a tests. Porque puede darse
 - Consumer-driven contracts
 - blue/green deployments
 - canary releases
+- [Strangler Pattern](https://martinfowler.com/bliki/StranglerFigApplication.html) by `Martin Fowler`
+- [Strangler Pattern](https://microservices.io/patterns/refactoring/strangler-application.html) by `Chris Richardson`
 
 # Conclusion
