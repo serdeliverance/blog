@@ -113,6 +113,43 @@ Esto más da tiempo al cliente de upgradearse y no bloquea el ciclo de release d
 
 No obstante, este approach tiene downsides en cuanto a tests. Porque puede darse el caso de que varios clientes no se actualicen, y tener varias versiones de la api (ej: v1, v2 y v3). las cuales hay que seguir mantiendo respecto a tests. Una estrategia es, internamente, en las apis mas viejas adaptar los payloads y que hagan requests a la api más actual. Eso hace más facil el testing (solo debemos testear la api más actual) y también poder deprecar dichas apis.
 
+## Chapter 05 - Splitting the monolith
+
+Approaches para separar el monolito
+
+### Identificar Seams
+
+- identificar bounded contexts y separarlos dentro de `packages` en el mismo proyecto. Apoyarse en las herramientas de refactor que nos provea el IDE.
+
+- apoyarse en tests para este propósito
+
+`TIP`: puede ser útil tener una herramienta de análisis de dependencias que provea una visualización (estilo grafo) de las mismas.
+
+### Reasons for splitting the monolith
+
+Es importante saber el por qué es necesario hacerlo. Dichas razones pueden ser:
+
+- el arribo de una gran cantidad de features que se sabe van a impactar sobre un mismo bounded context (entonces conviene tenerlo como ms)
+- team structure. hay que pensar en el equipo. Supongamos que tenemos un equipo distribuido en londres y en el salvador, tal vez nos convenga tener bounded contexts separados para que cada equipo trabaje con un set especifico de features y tenga un mejor ownership (esto es importante tambien por cuestiones de huso horario)
+- technology: pueden haber razones para que un bounded context sea implementado con una tecno especifica, entonces este sea un buen driver para extraerlo del monolito.
+- tangled dependencies: qué tan atadas entre sí están las dependencias. esto puede hacer al código mucho menos mantenible.
+
+Getting to grips with the problem
+
+Generalmente la base de datos es donde se genera el acoplamiento (dado que es el mecanismo de integración más común). Entonces, una estrategia para empezar a visualizar los bounded context es splittear el repository layer
+
+`TODO imagen repository_layer_splitted.jpg`
+
+Esto es un gran avance, pero no es suficiente. También puede ser útil analizar las dependencias entre tablas a nivel base de datos, por ejemplo, usando [SchemaSpy](https://schemaspy.org/)
+
+Casos puntuales
+
+- breaking foreign key relationships: cuando un bounded context referencia a tablas de otro bounded context, es mejor eliminar esta referencia (integración via db), y hacer que el servicio referenciado exponga una API para que el segundo la consuma
+
+- shared static data: cuando tenemos info estática que es compartida entre varios servicios (ej: `country codes`), es mejor extraer dicho código comun en archivos de configuración (dado que extraer esto en un servicio aparte es un overkill)
+
+- shared data: cuando vemos que varios servicios le pegan a una misma tabla, y podemos reconocer que esta tabla o conjunto de tablas representa un bounded context en sí misma, entonces podemos crear un ms que la encapsule y exponer API endpoints para que sea accedida.
+
 ## TODO
 
 - investigar [mod_proxy](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html) (for rest)
