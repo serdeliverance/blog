@@ -138,7 +138,7 @@ Getting to grips with the problem
 
 Generalmente la base de datos es donde se genera el acoplamiento (dado que es el mecanismo de integración más común). Entonces, una estrategia para empezar a visualizar los bounded context es splittear el repository layer
 
-`TODO imagen repository_layer_splitted.jpg`
+![repository layer splitted]({{ site.baseurl }}/assets/images/building-microservices-review/repository_layer_splitted.png "Repository Layer Splitted")
 
 Esto es un gran avance, pero no es suficiente. También puede ser útil analizar las dependencias entre tablas a nivel base de datos, por ejemplo, usando [SchemaSpy](https://schemaspy.org/)
 
@@ -149,6 +149,47 @@ Casos puntuales
 - shared static data: cuando tenemos info estática que es compartida entre varios servicios (ej: `country codes`), es mejor extraer dicho código comun en archivos de configuración (dado que extraer esto en un servicio aparte es un overkill)
 
 - shared data: cuando vemos que varios servicios le pegan a una misma tabla, y podemos reconocer que esta tabla o conjunto de tablas representa un bounded context en sí misma, entonces podemos crear un ms que la encapsule y exponer API endpoints para que sea accedida.
+
+Staging the Break
+
+O en otras palabras: "splittear de a poco". La recomendación del autor es qué, una vez que identificamos los "pliegues" (dónde cortar, donde se delimitan los bounded contexts) a nivel servicio y a nivel schema de datos, lo que `nos conviene hacer es primero splittear el schema de db. Luego, splitear en dos servicios`.
+
+Splittear primero a nivel datos nos permite poder medir el impacto de dicha separación. Más que nada, esto se refleja en los `joins` que hay que hacer en memoria cuando unimos data de dos squemas separados. También nos permite ver si tenemos algún issue con la transaccionalidad (es decir, si teniamos transaccionalidad con data que ahora está en schemas separados). Si todo eso está ok, nos da una base sólida para poder movernos hacia un split de servicios.
+
+![staging the break]({{ site.baseurl }}/assets/images/building-microservices-review/stagging_service_separation.png "Staging the Break")
+
+Transaccionalidad
+
+Cuando spliteamos servicios, perdemos algo que sí teniamos en el monolito out of the box: `integridad transaccionalidad`. Ahora, ya no tenemos un `transaccional boundary` que podríamos gestionar facilmente con transacciones de DB, sino que tenemos boundaries entre servicios. Estrategias para esto:
+
+- implementar retries: cuando implementamos retries, asumimos que ciertas operaciones fallidas se reintentaran luego. esto introduce el concepto de `eventual consistency`. Es decir, asentúa la idea de que el sistema será consistente en un punto del futuro.
+- alguna forma de orquestación, para orquestar tanto flujos de success como de failure (sería una rollback a mano que involucra potencialmente a varios microservicios)
+
+Tips
+
+- al ver un flujo de negocio, siempre preguntarse si tiene sentido que sea transaccional o si podría usarse `eventual consistency`.
+
+- si si o si se requiere que un flujo de negocio sea transaccional, tratar de evitar splitear los servicios involucrados, para poder gestionarlo de una forma similar al monolito.
+
+Reporting
+
+otro `TIP`: `siempre tener en cuenta el reporting`. Ahora que estamos spliteando microservicios, obtener reportes no estan facil como antes (donde con un par de joins estabas hecho).
+
+Hay diferentes approaches para poder seguir generando reporting:
+
+- reporting database: consiste en tener una db replica. entonces el schema del servicio va replicando contra esta database. Acá tendríamos todo, sin embargo podemos tener problemas como el fuerte acoplamiento entre ambos esquemas (es decir, si cambia la db del servicio, podemos romper la db de replica). La segunda ventaja es que, como replicamos la base tal cual, estamos atados a la db original, la cual tal vez no sea la más performante para el reporting que necesitamos... es decir, perdemos la libertad de realizar optimizaciones sobre nuestra db de reporting porque su infraestructura es una replica de la db de la que se nutre. También perdemos la posibilidad de elegir una db que se adapte mejor a las necesidades del reporting.
+
+# Posibles soluciones:
+
+## data retrieval via `Service Calls`
+
+que los servicios expongan endpoints donde se pueda consultar info que luego el service de reporte utilizara. Esto tiene un riesgo cuando el volumen de datos que se va a consultar es alto. Por ej: si consultamos ventas de hace 2 años para hacer un reporte
+
+Posibles mejoras:
+
+- que el servicio exponga bach API endopoints: es decir, endpoints a los que se les pueda consultar por un conjunto de IDs
+- ofrecer endpoints con opciones de paginado de resultados
+
 
 ## TODO
 
