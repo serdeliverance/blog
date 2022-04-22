@@ -190,6 +190,20 @@ Posibles mejoras:
 - que el servicio exponga bach API endopoints: es decir, endpoints a los que se les pueda consultar por un conjunto de IDs
 - ofrecer endpoints con opciones de paginado de resultados
 
+## Testing
+
+se hace fuerte énfasis en las complicaciones que traen los tests `e2e` y se explica por qué es mejor tener una limitada cantidad de ellos (más cuando dichos tests involucran a servicios mantenidos por varios equipos).
+
+Se habla de los `smoke tests` como una manera de testear rápidamente que un servicio, al ser deployado en un ambiente productivo, no tenga problemas de configuración.
+
+Se introduce `Consumer-Driven Contracts` como una forma de testear integraciones, a través de contratos que pueden testearse durante el pipeline de `CI/CD` y que son menos costosos que los `e2e`.
+
+Como complemento, se nombra las técnicas `blue/green` y `canary deployment` como otras formas de testear una aplicación.
+
+Es importante también ver al testing como una herramienta para obtener rápido feedback, y tratar de tener un balance entre el testing y la rapidez con la que resolvemos issues en producción (porque de nada nos sirve tener muchos tests, si cuando sale un issue en prod no sabemos como resolverlo)
+
+A lo largo de todo el capítulo se remarca la importancia de tener un buen `monitoring`.
+
 
 ## TODO
 

@@ -61,6 +61,8 @@ This make it possible to take advantage of the powers of composability and `func
 
 # IO niceties
 
+`fibers, cancellation, structured concurrency`
+
 # The Tagless Final approach
 
 # IO Runtime
