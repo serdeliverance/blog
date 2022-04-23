@@ -204,6 +204,13 @@ Es importante también ver al testing como una herramienta para obtener rápido 
 
 A lo largo de todo el capítulo se remarca la importancia de tener un buen `monitoring`.
 
+# Monitoring
+
+si es un monolito, se pueden analizar los logs con un simple `grep`. En cambio, si tenemos algunos hosts mas, se puede usar multiplexacion ssh. Si, sin embargo, llegamos a tener ya un conjunto importante de ms, nos conviene empezar a utilizar herramientas como `logtash` y `kibana` para el procesamiento y visualización de logs. También se recomeinda `Graphite`.
+
+Es importante tener en cuenta patrones/mecanismos como el `Correlational ID` para el tracking de requests que involucran varios ms.
+
+Nagios es una buena herramienta de monitoreo.
 
 ## TODO
 
@@ -216,5 +223,9 @@ A lo largo de todo el capítulo se remarca la importancia de tener un buen `moni
 - canary releases
 - [Strangler Pattern](https://martinfowler.com/bliki/StranglerFigApplication.html) by `Martin Fowler`
 - [Strangler Pattern](https://microservices.io/patterns/refactoring/strangler-application.html) by `Chris Richardson`
+
+# Review
+
+Es un libro sobre `thoughts about microservices`. El auto es una persona con dos décadas de experiencia y un gran entusiasta de este estilo arquitectural. Debido a esto, el libro está lleno de `tips` basados en experiencia sobre proyectos reales. 
 
 # Conclusion
