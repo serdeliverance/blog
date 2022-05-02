@@ -57,23 +57,23 @@ It has a `name`, an optional `description`, an associated `userId` (maybe relate
 
 Now, let's define the `use cases` it exposes to the outer layers. For that, lets create a `package` called `usecases` inside the `domain` `package`.
 
-Inside this package going to create our first `use case`: `GetAccountUseCase` in a dedicated file. It will expose the following algebra:
+Inside this package going to create our first `use case`: `CreateAccountUseCase` in a dedicated file. It will expose the following algebra:
+
+``` scala
+trait CreateAccountUseCase[F[_]]:
+  def createAccount(account: Account): F[Account]
+```
+
+Then, we will do the same for the `GetAccountUseCase` and `GetAllAccountsUseCase`:
 
 ``` scala
 trait GetAccountUseCase[F[_]]:
   def getAccount(): F[Option[Account]]
 ```
-
-Then, we will do the same for the `GetAllAccountsUseCase` and `CreateAccountUseCase`:
 
 ``` scala
 trait GetAllAccountsUseCase[F[_]]:
   def getAllAccounts(): F[List[Account]]
-```
-
-``` scala
-trait GetAccountUseCase[F[_]]:
-  def getAccount(): F[Option[Account]]
 ```
 
 We have our domain defined. It is interesting to note that, using this approach (more specifically, the `tagless final` one), our domain is library agnostic. We are not tied to any `effect system`.
@@ -85,6 +85,13 @@ Our folder structure is taking now the following shape:
 # Application layer
 
 The `application layer` is in charfe of implementing the business logic and wired the remaining layers together. More specifically, it communicates the adapter layer with the domain one through ports.
+
+Let's create a package called `application` at root level. Inside it, we are going to create a file called `CreateAccountService`, which will implement the `CreateAccountUseCase`. It will be our first draft implementation:
+
+``` scala
+class CreateAccountService[F[_]] extends CreateAccountUseCase[F]:
+  override def createAccount(account: Account): F[Account] = ???
+```
 
 # Adapters
 
