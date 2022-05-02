@@ -111,7 +111,7 @@ class CreateAccountService[F[_]] extends CreateAccountUseCase[F]:
 
 `TODO changing doobie by skunk`
 
-# Refactor #3: adding grpc adapter
+# Refactor #3: adding kafka adapter
 
 # Testing
 
