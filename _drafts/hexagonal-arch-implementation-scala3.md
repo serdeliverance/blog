@@ -82,20 +82,52 @@ Our folder structure is taking now the following shape:
 
 `TODO UPDATED screenshoot of the folder structure`
 
-# Application layer
+# Application layer and the implementation of CreateAccountUseCase
 
-The `application layer` is in charfe of implementing the business logic and wired the remaining layers together. More specifically, it communicates the adapter layer with the domain one through ports.
+The `application layer` is in charge of implementing the business logic and wire the remaining layers together. More specifically, it communicates the adapter layer with the domain one through ports.
 
 Let's create a package called `application` at root level. Inside it, we are going to create a file called `CreateAccountService`, which will implement the `CreateAccountUseCase`. It will be our first draft implementation:
 
 ``` scala
+package io.github.sdev.mpf.application
+
 class CreateAccountService[F[_]] extends CreateAccountUseCase[F]:
   override def createAccount(account: Account): F[Account] = ???
 ```
 
+For the purpose of this tutorial, we will define a dummy implementation that just persist into database through a repository without taking care of validation. However, the [final code](https://google.com) uses [ApplicativeError and MonadErrror](https://typelevel.org/cats/typeclasses/applicativemonaderror.html) for performing validations at a Higher Kind level.
+
+Comming back to our implementation, we need a repository to perform changes against the db. We need some kind of `AccountRepository`. If we think about it, it will be some kind of external component from the point of view of our application layer:
+
+![Account Repository port]({{ site.baseurl }}/assets/images/hexagonal-arch-scala3-ce/XX-account-repository.png "Account Repository port")
+
+So, lets define a `package` called `ports` inside `application`. Inside this new package, let's create another one called `out` (because with this port, the communication flow will be from inner layers towards the outer ones). Finally, let's define the algebra of our repository:
+
+``` scala
+package io.github.sdev.mpf.application.ports.out
+
+trait AccountRepository[F[_]]:
+  def save(account: Account): F[Account]
+```
+For now it is ok. Later, we will implement this feature on the correspondent adapter. Let's come back to `CreateAccountService` and finalize the implementation of our use case:
+
+``` scala
+class CreateAccountService[F[_]](accountRepository: AccountRepository[F]) extends CreateAccountUseCase[F]:
+
+  override def createAccount(account: Account): F[Account] =
+    accountRepository.save(account)
+```
+
+This implementation is dummy, but reflects the dependency with our colaborator (`AccountRepository`)
+
+
+I leave the implementation of `GetAccountUseCase` as an exercise for the reader. However, you can check it out in the [repo](https://google.com)
+
 # Adapters
 
-# Adding more adapters
+# Implementing GetAllAccountsUseCase
+
+# Adding more adapters and implementing the missing ones
 
 # Wiring all together
 
