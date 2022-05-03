@@ -82,7 +82,7 @@ Our folder structure is taking now the following shape:
 
 `TODO UPDATED screenshoot of the folder structure`
 
-# Application layer and the implementation of CreateAccountUseCase
+# Implementing the Create account use case
 
 The `application layer` is in charge of implementing the business logic and wire the remaining layers together. More specifically, it communicates the adapter layer with the domain one through ports.
 
@@ -125,11 +125,11 @@ I leave the implementation of `GetAccountUseCase` as an exercise for the reader.
 
 # Adapters
 
-# Implementing GetAllAccountsUseCase
+# Implementing the get all accounts use case
 
 # Adding more adapters and implementing the missing ones
 
-# Wiring all together
+# Wiring all things together
 
 `TODO create server instantiating resources`
 
