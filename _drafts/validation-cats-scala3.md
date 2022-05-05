@@ -93,6 +93,32 @@ Just the first invalid result is informed. If the user fixes this error, she wil
 
 # Validated
 
+`TODO Validated intro`
+
+Before moving into Validated, let's do a little refactor. Let's typify our validations.
+
+``` scala
+sealed trait AccountValidation:
+  def errorMessage: String
+
+case object NameIsEmpty extends AccountValidation:
+  override def errorMessage = "name must not be empty"
+
+case object UserIsInvalid extends AccountValidation:
+  override def errorMessage = "userId must be positive"
+
+case object InitialAmountNotPositive extends AccountValidation:
+  override def errorMessage = "initial amount must be positive"
+
+case object CreationDateInvalid extends AccountValidation:
+  override def errorMessage = "creation date could not be greater than current time"
+```
+
+Now, let's continue with the use of `Validated`
+
+`TODO using Validated`
+
+
 # An improvement
 
 # Bonus: testing our validations
