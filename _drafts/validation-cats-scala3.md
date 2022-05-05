@@ -145,7 +145,7 @@ def validateCreatedAt(createdAt: OffsetDateTime): Validated[AccountValidation, O
     .toValidated
 ```
 
-The problem with that is that we cannot use our `validate` method (which is based on `for-comprehensions`), because `Validated` is not a Monad, so it doesn't have `flatMap`. Instead, `Validated` is an [Applicative Functor](https://typelevel.org/cats/typeclasses/applicativetraverse.html)
+The problem with that is that we cannot use our former `validate` method (which is based on `for-comprehensions`), because `Validated` is not a Monad, so it doesn't have `flatMap`. Instead, `Validated` is an [Applicative Functor](https://typelevel.org/cats/typeclasses/applicativetraverse.html)
 
 `TODO explain NonEmptyChain`
 
