@@ -147,9 +147,43 @@ def validateCreatedAt(createdAt: OffsetDateTime): Validated[AccountValidation, O
 
 The problem with that is that we cannot use our former `validate` method (which is based on `for-comprehensions`), because `Validated` is not a Monad, so it doesn't have `flatMap`. Instead, `Validated` is an [Applicative Functor](https://typelevel.org/cats/typeclasses/applicativetraverse.html)
 
-`TODO explain NonEmptyChain`
+# Applicative
 
-`TODO ValidationResultAlias`
+Given that `for-comprehensions` are `fail-fast`, we need to find another way to accumulate our errors. In this case, we can try to use another structure to express the invalid side of our `Validated`:
+
+``` scala
+type ValidationResult[T] = Validated[NonEmptyList[AccountValidation], T]
+```
+
+`NonEmptyList` is a data structure that guarantees that it will hold at least one element, which is what we are looking for in case of having validation errors.
+
+`ValidationResult[T]` is a convenient alias for re-utilize this kind of type definition.
+
+Also in `Cats`, the data type `Validated[NonEmptyList[DomainError], A]` has an alias: `ValidatedNel[DomainError, A]`. So, we can rewrite our definition as the following:
+
+``` scala
+type ValidationResult[T] = ValidatedNel[AccountValidation, T]
+```
+
+Having all this set up, we can refactor our validation methods:
+
+``` scala
+def validateName(name: String): ValidationResult[String] =
+  if name.nonEmpty then name.validNel else NameIsEmpty.invalidNel
+
+def validateUserId(userId: Long): ValidationResult[Long] =
+  if userId > 0 then userId.validNel else UserIsInvalid.invalidNel
+
+def validateInitialAmount(initialAmount: BigDecimal): ValidationResult[BigDecimal] =
+  if initialAmount > 0 then initialAmount.validNel else InitialAmountNotPositive.invalidNel
+
+def validateCreatedAt(createdAt: OffsetDateTime): ValidationResult[OffsetDateTime] =
+  if createdAt.isBefore(OffsetDateTime.now) then createdAt.validNel else CreationDateInvalid.invalidNel
+```
+
+`validNel` and `invalidNel` are syntax methods provided by the `Validated` object (`import cats.data.Validated._`). Those methods allow us to lift our values to `ValidatedNel` context.
+
+Also, it is a great oportunity to see how clean flow control expressions are in `Scala 3`.
 
 `TODO refactor and mapN`
 
