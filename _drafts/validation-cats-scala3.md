@@ -89,7 +89,7 @@ val accountDTO = AccountDTO(
   println(result) // it will print `Left(userId must be positive)`
 ```
 
-Just the first invalid result is informed. If the user fixes this error, she will have to retry until all the remaining fields were ok, which is a really bad experiencie for an `API end user`. In this case, it would be great to have a way to express all the invalid values at once. Let's try to find another `Datatype` that help us to reach that goal.
+Just the first invalid result is informed. If the user fixes this error, she will have to retry until all the remaining fields were ok, which is a really bad experiencie for an `API end user`. In this case, it would be great to have a way to express all the invalid reasons at once. Let's try to find another `Datatype` that help us to reach that goal.
 
 Before moving to the next section, let's do a little refactor to typify our validations.
 
