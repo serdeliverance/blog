@@ -44,7 +44,7 @@ An `account` to be valid needs to satisfy the following rules:
 - `name` must not be empty
 - `initialAmount` must be positive
 - `userId` must be positive
-- `createdAt` must not be more than current time
+- `createdAt` must be less than current time
 
 In order to properly validate those fields, our first approach could be something based on `Either`, which is a datatype that allow us to represent a computation that can be either an error or a success. So, we create the following methods:
 
@@ -74,7 +74,7 @@ def validate(accountDTO: AccountDTO): Either[String, Account] =
     yield Account(name, userId, accountDTO, createdAt)
 ```
 
-The problem with that approach is that `Either` short-circuit the operation at the first error (`Left` value). So, for example, if we have the following:
+The problem with that approach is that `Either` short-circuits the operation at the first error (`Left` value) it gets. So, for example, if we have the following:
 
 ``` scala
 val accountDTO = AccountDTO(
@@ -89,7 +89,7 @@ val accountDTO = AccountDTO(
   println(result) // it will print `Left(userId must be positive)`
 ```
 
-Just the first invalid result is informed. If the user fixes this error, she will have to retry until all the remaining fields were ok, which is a really bad experiencie for an `API User`. In this cases, it would be great to have a way to express all the invalid values at once. Let's try to find another `Datatype` that help us to reach that goal.
+Just the first invalid result is informed. If the user fixes this error, she will have to retry until all the remaining fields were ok, which is a really bad experiencie for an `API end user`. In this case, it would be great to have a way to express all the invalid values at once. Let's try to find another `Datatype` that help us to reach that goal.
 
 # Validated
 
