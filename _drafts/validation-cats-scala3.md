@@ -130,27 +130,33 @@ import cats.data._
 import cats.data.Validated._
 import cats.implicits._
 
-def validateName(name: String): Validated[String, String] =
-  Either.cond(name.nonEmpty, name, "name must not be empty").toValidated
+def validateName(name: String): Validated[AccountValidation, String] =
+  Either.cond(name.nonEmpty, name, NameIsEmpty).toValidated
 
-def validateUserId(userId: Long): Validated[String, Long] =
-  Either.cond(userId > 0, userId, "userId must be positive").toValidated
+def validateUserId(userId: Long): Validated[AccountValidation, Long] =
+  Either.cond(userId > 0, userId, UserIsInvalid).toValidated
 
-def validateInitialAmount(initialAmount: BigDecimal): Validated[String, BigDecimal] =
-  Either.cond(initialAmount > 0, initialAmount, "initial amount must be positive").toValidated
+def validateInitialAmount(initialAmount: BigDecimal): Validated[AccountValidation, BigDecimal] =
+  Either.cond(initialAmount > 0, initialAmount, InitialAmountNotPositive).toValidated
 
-def validateCreatedAt(createdAt: OffsetDateTime): Validated[String, OffsetDateTime] =
+def validateCreatedAt(createdAt: OffsetDateTime): Validated[AccountValidation, OffsetDateTime] =
   Either
-    .cond(createdAt.isBefore(OffsetDateTime.now), createdAt, "creation date could not be in the future")
+    .cond(createdAt.isBefore(OffsetDateTime.now), createdAt, CreationDateInvalid)
     .toValidated
 ```
 
 The problem with that is that we cannot use our `validate` method (which is based on `for-comprehensions`), because `Validated` is not a Monad, so it doesn't have `flatMap`. Instead, `Validated` is an [Applicative Functor](https://typelevel.org/cats/typeclasses/applicativetraverse.html)
 
-`TODO using Validated`
+`TODO explain NonEmptyChain`
+
+`TODO ValidationResultAlias`
+
+`TODO refactor and mapN`
 
 
 # An improvement
+
+`TODO adding syntax with extension methods`
 
 # Bonus: testing our validations
 
