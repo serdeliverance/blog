@@ -91,11 +91,7 @@ val accountDTO = AccountDTO(
 
 Just the first invalid result is informed. If the user fixes this error, she will have to retry until all the remaining fields were ok, which is a really bad experiencie for an `API end user`. In this case, it would be great to have a way to express all the invalid values at once. Let's try to find another `Datatype` that help us to reach that goal.
 
-# Validated
-
-`TODO Validated intro`
-
-Before moving into Validated, let's do a little refactor. Let's typify our validations.
+Before moving to the next section, let's do a little refactor to typify our validations.
 
 ``` scala
 sealed trait AccountValidation:
@@ -114,7 +110,42 @@ case object CreationDateInvalid extends AccountValidation:
   override def errorMessage = "creation date could not be greater than current time"
 ```
 
-Now, let's continue with the use of `Validated`
+# Validated
+
+[Validated](https://typelevel.org/cats/datatypes/validated.html) is a datatype provided by `Cats` that is similar to `Either` because it can take two possible values: `Valid` or `Invalid`:
+
+``` scala
+sealed abstract class Validated[+E, +A] extends Product with Serializable {
+  ???
+}
+
+final case class Valid[+A](a: A) extends Validated[Nothing, A]
+final case class Invalid[+E](e: E) extends Validated[E, Nothing]
+```
+
+We can refactor our validations to use `Validated` instead.
+
+``` scala
+import cats.data._
+import cats.data.Validated._
+import cats.implicits._
+
+def validateName(name: String): Validated[String, String] =
+  Either.cond(name.nonEmpty, name, "name must not be empty").toValidated
+
+def validateUserId(userId: Long): Validated[String, Long] =
+  Either.cond(userId > 0, userId, "userId must be positive").toValidated
+
+def validateInitialAmount(initialAmount: BigDecimal): Validated[String, BigDecimal] =
+  Either.cond(initialAmount > 0, initialAmount, "initial amount must be positive").toValidated
+
+def validateCreatedAt(createdAt: OffsetDateTime): Validated[String, OffsetDateTime] =
+  Either
+    .cond(createdAt.isBefore(OffsetDateTime.now), createdAt, "creation date could not be in the future")
+    .toValidated
+```
+
+The problem with that is that we cannot use our `validate` method (which is based on `for-comprehensions`), because `Validated` is not a Monad, so it doesn't have `flatMap`. Instead, `Validated` is an [Applicative Functor](https://typelevel.org/cats/typeclasses/applicativetraverse.html)
 
 `TODO using Validated`
 
