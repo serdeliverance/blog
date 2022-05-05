@@ -183,10 +183,30 @@ def validateCreatedAt(createdAt: OffsetDateTime): ValidationResult[OffsetDateTim
 
 `validNel` and `invalidNel` are syntax methods provided by the `Validated` object (`import cats.data.Validated._`). Those methods allow us to lift our values to `ValidatedNel` context.
 
-Also, it is a great oportunity to see how clean flow control expressions are in `Scala 3`.
+Also, it is a great oportunity to see how clean flow control expressions are in `Scala 3` (you can see it in the `if-then-else` expressions above).
 
-`TODO refactor and mapN`
+Now, we can rewrite our `validate` method, but using this time `Applicative` syntax, more specifically, the `mapN` method.
 
+``` scala
+def validate(accountDTO: AccountDTO): ValidationResult[Account] =
+    (
+      validateName(accountDTO.name),
+      validateUserId(accountDTO.userId),
+      validateInitialAmount(accountDTO.initialAmount),
+      validateCreatedAt(accountDTO.createdAt)
+    )
+      .mapN((name, userId, initialAmount, createdAt) => Account(name, userId, initialAmount, createdAt))
+```
+
+The `mapN` methods provide us to apply all the validations, returning the success values as a tuple, or the accumulated validation error list.
+
+Let's see how it works:
+
+`TODO use validate an print results`
+
+# Some words about mapN
+
+`TODO explain mapN`
 
 # An improvement
 
@@ -194,4 +214,8 @@ Also, it is a great oportunity to see how clean flow control expressions are in 
 
 # Bonus: testing our validations
 
+`TODO`
+
 # Conclusions
+
+`TODO`
