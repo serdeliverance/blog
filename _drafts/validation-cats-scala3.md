@@ -147,7 +147,7 @@ def validateCreatedAt(createdAt: OffsetDateTime): Validated[AccountValidation, O
 
 The problem with that is that we cannot use our former `validate` method (which is based on `for-comprehensions`), because `Validated` is not a Monad, so it doesn't have `flatMap`. Instead, `Validated` is an [Applicative Functor](https://typelevel.org/cats/typeclasses/applicativetraverse.html)
 
-# Applicative
+# Using Applicative
 
 Given that `for-comprehensions` are `fail-fast`, we need to find another way to accumulate our errors. In this case, we can try to use another structure to express the invalid side of our `Validated`:
 
@@ -204,7 +204,11 @@ Let's see how it works:
 
 `TODO use validate an print results`
 
-# Some words about mapN
+# Some words about Applicative and mapN
+
+`TODO brief explanation about Applicative`
+
+You can found more info about `Applicative` in [Cats documentation](https://typelevel.org/cats/typeclasses/applicative.html). Also, the book [Essential Effects](https://essentialeffects.dev/) brings a great intro to this topic and its importance when applying to parallelism scenarios.
 
 `TODO explain mapN`
 
