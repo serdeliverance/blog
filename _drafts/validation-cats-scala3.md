@@ -218,7 +218,36 @@ You can found more info about `Applicative` in [Cats documentation](https://type
 
 # Bonus: testing our validations
 
-`TODO`
+Following, there is our test suite. It is a very regular one using just plain `Scalatest`:
+
+``` scala
+class AccountValidatorSpec extends AnyFlatSpec with Matchers {
+
+  private val account = Account("n26-23", 34, 23, OffsetDateTime.now)
+
+  it should "return valid account" in {
+    val result = account.toValidated
+    result mustBe Valid(account)
+  }
+
+  it should "return invalid userId" in {
+    val invalidAccount = account.copy(userId = -5) // invalid userId
+    val result         = invalidAccount.toValidated
+    result match
+      case Invalid(nel) => nel.toList mustBe List(UserIsInvalid)
+      case _            => fail("userId validation error expected")
+  }
+
+  it should "return invalid accumulated list results" in {
+    val invalidAccount =
+      account.copy(userId = -5, createdAt = OffsetDateTime.now.plusYears(2)) // invalid userId and createdAt
+    val result = invalidAccount.toValidated
+    result match
+      case Invalid(nel) => nel.toList mustBe List(UserIsInvalid, CreationDateInvalid)
+      case _            => fail("multiple account validation error expected")
+  }
+}
+```
 
 # Conclusions
 
