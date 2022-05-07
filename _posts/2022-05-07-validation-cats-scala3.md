@@ -1,6 +1,7 @@
 ---
 title: Validation with Cats in Scala 3
-excerpt: 'Validation entity example in Cats using Scala 3 features'
+date: 2022-05-07 19:28:00
+excerpt: 'Validate your domain entities in Scala 3 using Cats'
 categories:
   - blog
 tags:
@@ -12,7 +13,7 @@ header:
 
 # Intro
 
-In this post we are going to see how to validate entities using `Cats` in `Scala 3`. Also, it is a great opportunity to see how extension methods are used and opaque types are used.
+In this post we are going to see how to validate entities using `Cats` in `Scala 3`. Also, it is a great opportunity to see some `Scala 3` syntax and mechanisms.
 
 # A quick intro to Validation
 
