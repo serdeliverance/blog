@@ -204,9 +204,9 @@ So, we achieved our goal of having an accumulated list of valition errors in cas
 
 `mapN` uses [Semigroupal](https://typelevel.org/cats/api/cats/Semigroupal.html) under the hood. More specifically, the method `product` from `Semigroupal`. This method allow us to combine two effects `F[A]` and `F[B]` into `F[(A, B)]`.
 
-In case of `Validated`, the `product` method accumulate validation errors if found any. Otherwise, it returns the product (`Valid[(A, B, C, ...)])`).
+In case of `Validated`, the `product` method accumulate validation errors if founds any. Otherwise, it returns the product (`Valid[(A, B, C, ...)])`).
 
-You can found more info about `Applicative` in [Cats documentation](https://typelevel.org/cats/typeclasses/applicative.html). Also, the book [Essential Effects](https://essentialeffects.dev/) brings a great intro to this topic and its importance when applying to parallelism scenarios.
+You can found more info about `Applicative` in [Cats documentation](https://typelevel.org/cats/typeclasses/applicative.html). Also, the book [Essential Effects](https://essentialeffects.dev/) brings a great intro to this topic and its importance when applying to parallelism.
 
 # An improvement
 
@@ -232,10 +232,10 @@ This can allow us to have a cleaner syntax when performing validations in other 
 def create(account: Account): IO[Account] =
   account.toValidated match
     case Valid(account) => repository.save(account)
-    case Invalid(erros) => IO.raiseError(???) // your error handling logic/reporting
+    case Invalid(erros) => IO.raiseError(???) // your error handling logic
 ```
 
-# Bonus: testing our validations
+# Testing our validations
 
 Following, there is our test suite. It is a very regular one using just plain `Scalatest`:
 
