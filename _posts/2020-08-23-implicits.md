@@ -10,11 +10,11 @@ header:
   image: '/images/header.jpg'
 ---
 
-## Intro
+# Intro
 
 In this post, we are going to see a powerful feature of the `Scala` compiler called `implicit`.
 
-## Implicits
+# Implicits
 
 Implicits in Scala refers to the compiler ability to do these two things:
 
@@ -90,7 +90,7 @@ Implicit parameters can be:
 
 And all of them must be inside a class, object or trait in order to be visible by the compiler.
 
-### Implicit scope
+## Implicit scope
 
 `Implicit scope` are the places where the compiler searchs for implicits. The compiler will look for them in the following order:
 
@@ -142,6 +142,10 @@ stringToPerson("john").sayHello()   // what the compiler does
 
 In other words, an `implicit conversion` is not more that the compiler ability to look for a conversion, which is actually a function of type `A => B`, being `B` the type that supports the operation that were ask to perform initially over an object of type `A`.
 
-## Conclusion
+# Scala 3
+
+As you can see, `implicit` is a mechanism that can be used for many different things. `Scala 3` tends to be more clear about language constructs, so `implicit` was replaced for different constructs that allow us to define the things we want to do in a more explicit and opinionated  way. To learn more about this, you can check the [official documentation](https://docs.scala-lang.org/scala3/book/why-scala-3.html#4-implicits-simplified).
+
+# Conclusion
 
 In this post we've seen an introduction to `implicits` which is a powerful feature of `Scala`. `implicit parameters` and `implicit conversions` are used a lot in the `Scala` ecosystem, and not just there, but even in your domain code when you start feeling comfortably with them. Both features are very important to understand very common concepts in the `Scala` ecosystem, such as `Extension methods`, `Pimp my library pattern`, and even more advanced ones (and most popular too) like `Type Classes`, which are the main gateway to the `Cats` library.
