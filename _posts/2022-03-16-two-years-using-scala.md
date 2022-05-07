@@ -28,7 +28,7 @@ After that, I got my first job as a `Scala` developer, and I started learning mo
 
 Also, I continued reading some books in my free time . I read `Scala Essentials`, `Scala with Cats` and I've tried to develop some applications using just the `Typelevel stack` (`Cats`, `Http4s`, `Doobie`, etc) but I've never succeeded. Until now I still think that `Typelevel` ecosystem is very challenging and over complicated.
 
-In the last couple of months, I've been studying `ZIO` and `Scala 3`.
+In the last couple of months, I've been studying `ZIO`, `Cats` and `Scala 3`.
 
 ## Language
 
@@ -82,7 +82,7 @@ However, given the flexibility of `Scala` plus the rich and solid `JVM` ecosyste
 
 ### Typelevel school
 
-[Typelevel](https://typelevel.org/) takes ideas from `Haskell` and `Type safety` but in another level and you can see that influences in their core libraries (`Cats` and `Cats Effect`), and also in libraries that are based on them, such as `Doobie`, `Http4s` and `Circe`. Those libraries are very concerned about how to deal with `side effects` in a safer way, and also, they are very concerned about `Type Safety` (but sometimes, too much IMHO). I must confess this approach is very interesting. In my experience, whenever I try to learn it I always end up frustrated in some way. For example, let's see the following code:
+[Typelevel](https://typelevel.org/) takes ideas from `Haskell` and `Type safety` but in another level and you can see that influences in their core libraries (`Cats` and `Cats Effect`), and also in libraries that are based on them, such as `Doobie`, `Http4s` and `Circe`. Those libraries are very concerned about how to deal with `side effects` in a safer way, and also, they are very concerned about `Type Safety` (but sometimes, too much IMHO). I must confess this approach is very interesting but sometimes it gets very difficult to understand. For example, let's see the following code:
 
 ``` scala
 def allRoles[F[_], Auth](
@@ -91,7 +91,7 @@ def allRoles[F[_], Auth](
   TSecAuthService.withAuthorization(_allRoles[F, AugmentedJWT[Auth, Long]])(pf)
 ```
 
-I think the approach of abstracting over the effect system and define interpreters is cool, but trying to be ultra type safe is not beginner friendly and engornomic. Of course, I'm in a project where we don't use this stack so much and also there is no people seasoned with it.
+I think the approach of abstracting over the effect system and define interpreters is cool, but trying to be ultra type safe is not beginner friendly and engornomic. If you can have a good balance between abstraction and code readability, it has a great ecosystem and it is a very enjoyable approach.
 
 Typelevel has a lot of resources to learn and its community is very active and friendly. Reading its docummentation is always insightful and joining to its `Discord` challenge is worthwhile (there are lots of brillant people there that are very pleased to help you if you have any question).
 
@@ -103,7 +103,7 @@ Its community is very active and charmfull. The `ZIO` vision is to provide libra
 
 Nowadays, I'm not considering using `ZIO` for full backend development as I do with `Typelevel` or `Play/Akka/Future`, because I consider it is too much low level sometimes. But that's just my noob opinion. However, I think it is a great option for building tools, such as [Greyhound](https://github.com/wix/greyhound) or [Caliban](https://github.com/ghostdogpr/caliban).
 
-Also, the `ZIO` ecosystem was one of the first `Scala 3` early adopters.
+Also, the `ZIO` ecosystem was one of the firsts in adopting `Scala 3`.
 
 ### The Python approach
 
@@ -123,15 +123,13 @@ Talking about IDEs and editors, `IntelliJ` has a good support for `Scala 2` but 
 
 A brief mention to `Scala 3`. It is the newest version of `Scala`, with brings a new syntax and tries to bring to the table the essentials of `Scala` (which is `Dott calculus`, because of that the compiler for `Scala 3` was named `Dotty`).
 
-I think the new version of `Scala 3` is great. It tries to empathise explicitness over mechanisms (for example, in the contextual abstractions). Also, having optionally braces is great.
+I think the new version of `Scala 3` is great. It tries to empathise explicitness over mechanisms (for example, in the `contextual abstractions`). Also, having optionally braces is great.
 
-This new version brings features to the `Type System` (such as `Union` and `Interception` types, `Match Types`, etc), and also new tools for metaprogramming (such as `inline`). It brings new tools for functional programming too (such as `Context Functions`). However, I think all of them will make the language more difficult, harder to understand and not beginner friendly. I've seen that the `Scala` community tends to abuse of advanced mechanisms and uses it in a way that makes you feel that they are the norm, making the language sharp and innecesary complex.
+This new version brings features to the `Type System` (such as `Union` and `Interception` types, `Match Types`, etc), and also new tools for metaprogramming (such as `inline`). It brings new tools for functional programming too (such as `Context Functions`). I think that all of these features make the language more interesting and funny to learn. However, I'm afraid of this could lead to lot of code, tools and documentation with examples harder to understand and not beginner friendly. I've seen that the `Scala` community tends to abuse of advanced mechanisms and uses it in a way that makes you feel that they are the norm, making the language sharp and innecesary complex.
 
 ## Next steps in my journey
 
-Because of the things that I've mentioned in the previous section, I'm thinking seriously in giving `Scala` a rest for a while and start studying other topics and then come back again to see how these new features were adopted (actually, It could be a great time to learn more about `Nodejs`, `Nestjs` and some `Clean Architecture` stuff).
-
-However, I'll keep doing katas in `Scala`. In the future, I think I'll focus on `Scala 3` (trying to choose the features that makes sense for writting code that is clean and easy to understand), `ZIO` and `Akka`.
+Nowadays, I feel very excited with `Typelevel` and `Scala 3` stuff. I'm scratching the surface of `Tagless Final` and I'm really enjoying all the `Typelevel` libraries around its ecosystem. Also, I feel very interesting in `Scala 3` new features, syntax and specific topics such as [Type Class Derivation](https://docs.scala-lang.org/scala3/reference/contextual/derivation.html).
 
 ## Conclusions
 
