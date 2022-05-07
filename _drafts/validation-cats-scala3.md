@@ -24,18 +24,6 @@ case class Account(
     userId: Long,
     initialAmount: BigDecimal,
     createdAt: OffsetDateTime,
-    id: Option[Long] = None // id is assigned after creation in the db
-)
-```
-
-We expose and endpoint that allows users to create accounts. This endpoints receives the following `DTO`:
-
-``` scala
-case class AccountDTO(
-  name: String,
-  userId: Long,
-  initialAmount: BigDecimal,
-  createdAt: OffsetDateTime
 )
 ```
 
@@ -62,7 +50,7 @@ def validateCreatedAt(createdAt: OffsetDateTime): Either[String, OffsetDateTime]
   Either.cond(createdAt.isBefore(OffsetDateTime.now), createdAt, "creation date could not be in the future")
 ```
 
-`Either` is a monad, so we can evaluate all of this rules using a `for-comprehension`:
+`Either` is a monad, so we can evaluate all this rules using a `for-comprehension`:
 
 ``` scala
 def validate(accountDTO: AccountDTO): Either[String, Account] =
@@ -89,7 +77,7 @@ val accountDTO = AccountDTO(
   println(result) // it will print `Left(userId must be positive)`
 ```
 
-Just the first invalid result is informed. If the user fixes this error, she will have to retry until all the remaining fields were ok, which is a really bad experiencie for an `API end user`. In this case, it would be great to have a way to express all the invalid reasons at once. Let's try to find another `Datatype` that help us to reach that goal.
+Just the first invalid result is informed. If the user fixes this error, she will have to retry over and over again until all the remaining fields were ok, which is a really bad experience for an `API user`. In this case, it would be great to have a way to express all the invalid reasons at once. Let's try to find another `datatype` that can help us to reach that goal.
 
 Before moving to the next section, let's do a little refactor to typify our validations.
 
@@ -145,11 +133,11 @@ def validateCreatedAt(createdAt: OffsetDateTime): Validated[AccountValidation, O
     .toValidated
 ```
 
-The problem with that is that we cannot use our former `validate` method (which is based on `for-comprehensions`), because `Validated` is not a Monad, so it doesn't have `flatMap`. Instead, `Validated` is an [Applicative Functor](https://typelevel.org/cats/typeclasses/applicativetraverse.html)
+The problem with this approach is that we cannot use our former `validate` method (which is based on `for-comprehensions`), because `Validated` is not a Monad, so it doesn't have `flatMap`. Instead, `Validated` is an [Applicative Functor](https://typelevel.org/cats/typeclasses/applicativetraverse.html). We have to apply some refactors to this method.
 
 # Using Applicative
 
-Given that `for-comprehensions` are `fail-fast`, we need to find another way to accumulate our errors. In this case, we can try to use another structure to express the invalid side of our `Validated`:
+`for-comprehensions` are `fail-fast`, which is not suitable for our use case. We need to find a way to accumulate our errors. In this case, we can try to use another structure to express the invalid side of our `Validated`:
 
 ``` scala
 type ValidationResult[T] = Validated[NonEmptyList[AccountValidation], T]
@@ -159,7 +147,7 @@ type ValidationResult[T] = Validated[NonEmptyList[AccountValidation], T]
 
 `ValidationResult[T]` is a convenient alias for re-utilize this kind of type definition.
 
-Also in `Cats`, the data type `Validated[NonEmptyList[DomainError], A]` has an alias: `ValidatedNel[DomainError, A]`. So, we can rewrite our definition as the following:
+Also in `Cats`, the data type `Validated[NonEmptyList[DomainError], A]` has an alias: `ValidatedNel[DomainError, A]`. So, we can rewrite our definition:
 
 ``` scala
 type ValidationResult[T] = ValidatedNel[AccountValidation, T]
@@ -198,7 +186,7 @@ def validate(accountDTO: AccountDTO): ValidationResult[Account] =
       .mapN((name, userId, initialAmount, createdAt) => Account(name, userId, initialAmount, createdAt))
 ```
 
-The `mapN` methods provide us to apply all the validations, returning the success values as a tuple, or the accumulated validation error list.
+`mapN` allow us to apply all the validations, returning the success values as a `tuple`, or the accumulated validation error list.
 
 Let's see how it works:
 
