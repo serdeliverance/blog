@@ -229,10 +229,10 @@ object Account:
 This can allow us to have a cleaner syntax when performing validations in other places of our code:
 
 ``` scala
-def create(account: Account): F[Account] =
+def create(account: Account): IO[Account] =
   account.toValidated match
     case Valid(account) => repository.save(account)
-    case Invalid(erros) => Logger[F].info(s"Unable to persist because validations errors: ${errors}") *> // TODO! TODO! monadic error example
+    case Invalid(erros) => IO.raiseError(???) // your error handling logic/reporting
 ```
 
 # Bonus: testing our validations
@@ -267,6 +267,10 @@ class AccountValidatorSpec extends AnyFlatSpec with Matchers {
   }
 }
 ```
+
+# What the F[_]???
+
+During this tutorial we were talking about data validation using `Validated`, which is an specific data structure. However, you can also abstract over the concept of validation and not being tied to any particular implementation. This last approach is more evident when your code is strongly based on `polymorphic effects`. In cases like that, you can check [ApplicativeError and MonadError](https://typelevel.org/cats/typeclasses/applicativemonaderror.html#).
 
 # Conclusions
 
