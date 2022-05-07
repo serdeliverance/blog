@@ -212,6 +212,18 @@ Es importante tener en cuenta patrones/mecanismos como el `Correlational ID` par
 
 Nagios es una buena herramienta de monitoreo.
 
+# Security
+
+Es importante entender la naturaleza de la información que vamos a disponer, el medio y el cliente al cuál va dirigida.
+
+Existen diferentes mecanismo de seguridad: HTTP basic authentication, HTTPS, client certificates, API keys, network hardening, data encryption, OS patching, etc.
+
+Es importante gestionar la seguridad en diferentes niveles y tener en cuenta quien es el cliente. Un ejemplo de esto es el citado en el libro: `Music Corp`. Aquí se muestra que un sistema puede tener diferentes clientes: web, api client o un cliente que se comunica directamente por un canal securizado. Las diferentes formas de comunicacion puede sugerir distintos mecanismos de seguridad. Ej: para un web client, usar HTTPS para info que requiera login es una buena opción, y utilizar HTTP (no secure) por info que no requiere medidas de seguridad es una buena opción (además, permite tener un buen caching). Otro ejemplo es el de un third party provider que se comunica con nuestra API a partir de un medio seguro. Al ser un único (o una cantidad muy acotada de clientes), con clients certificates se pueden aplicar medidas de seguridad.
+
+El autor menciona que es importante que la seguridad se relacione con la estructura organizacional, y evitar hilar muy fino con la granularidad de los roles y permisos, por ejemplo. También se menciona la importancia del otorgamiento y revocación de permisos.
+
+
+
 ## TODO
 
 - investigar [mod_proxy](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html) (for rest)
