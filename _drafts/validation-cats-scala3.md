@@ -190,19 +190,50 @@ def validate(accountDTO: AccountDTO): ValidationResult[Account] =
 
 Let's see how it works:
 
-`TODO use validate an print results`
+``` scala
+val account = Account("n26-acc", -10, -500, OffsetDateTime.now.plusDays(2))
+
+val result = validate(account)
+
+println(result) // it will print: Invalid(NonEmptyList(UserIsInvalid, InitialAmountNotPositive, CreationDateInvalid))
+```
+
+So, we achieved our goal of having an accumulated list of valition errors in case of failure.
 
 # Some words about Applicative and mapN
 
-`TODO brief explanation about Applicative`
+`mapN` uses [Semigroupal](https://typelevel.org/cats/api/cats/Semigroupal.html) under the hood. More specifically, the method `product` from `Semigroupal`. This method allow us to combine two effects `F[A]` and `F[B]` into `F[(A, B)]`.
+
+In case of `Validated`, the `product` method accumulate validation errors if found any. Otherwise, it returns the product (`Valid[(A, B, C, ...)])`).
 
 You can found more info about `Applicative` in [Cats documentation](https://typelevel.org/cats/typeclasses/applicative.html). Also, the book [Essential Effects](https://essentialeffects.dev/) brings a great intro to this topic and its importance when applying to parallelism scenarios.
 
-`TODO explain mapN`
-
 # An improvement
 
-`TODO adding syntax with extension methods`
+We can enrich our `Account` case class adding `validate` as an extension method. For doing that, we can take advantage of `Scala 3` extension methods:
+
+``` scala
+object Account:
+
+  extension (account: Account)
+    def toValidated: ValidationResult[Account] =
+      (
+        validateName(account.name),
+        validateUserId(account.userId),
+        validateInitialAmount(account.initialAmount),
+        validateCreatedAt(account.createdAt)
+      )
+        .mapN((name, userId, initialAmount, createdAt) => Account(name, userId, initialAmount, createdAt))
+```
+
+This can allow us to have a cleaner syntax when performing validations in other places of our code:
+
+``` scala
+def create(account: Account): F[Account] =
+  account.toValidated match
+    case Valid(account) => repository.save(account)
+    case Invalid(erros) => Logger[F].info(s"Unable to persist because validations errors: ${errors}") *> // TODO! TODO! monadic error example
+```
 
 # Bonus: testing our validations
 
