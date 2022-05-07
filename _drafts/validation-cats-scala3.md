@@ -274,4 +274,4 @@ During this tutorial we were talking about data validation using `Validated`, wh
 
 # Conclusions
 
-`TODO`
+In this post we have seen how we can use `Validated` datatype from `Cats` to validate our domain objects and how we can use it in `Scala 3`. The code is available on [github](https://github.com/serdeliverance/sc-blog-code/tree/master/validation-cats-scala3)
