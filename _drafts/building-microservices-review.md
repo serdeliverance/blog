@@ -222,6 +222,14 @@ Es importante gestionar la seguridad en diferentes niveles y tener en cuenta qui
 
 El autor menciona que es importante que la seguridad se relacione con la estructura organizacional, y evitar hilar muy fino con la granularidad de los roles y permisos, por ejemplo. También se menciona la importancia del otorgamiento y revocación de permisos.
 
+# Conway's Law
+
+`if the organization building the system is more loosely coupled, the systems being built tend toward the more modular, and therefore hopefully less coupled`
+
+`El diseño de sistemas refleja la estructura comunicacional de la empresa que lo diseña` (parafraseando)
+
+Si tenemos un equipo estilo `two-pizza teams`, veremos que su impacto y frecuencia de delivery son altos, ya que la comunicación es ágil. Si, por el contrario, tenemos un equipo distribuido geográficamente, que trabaja en zonas horarias muy dispares, dicha estructura se reflejará en la frecuencia de cambios (por ejemplo, consensuar sobre cambios se vuelve una tarea ardua) y en el diseño.
+
 
 
 ## TODO
