@@ -134,7 +134,7 @@ def validateCreatedAt(createdAt: OffsetDateTime): Validated[AccountValidation, O
     .toValidated
 ```
 
-The problem with this approach is that we cannot use our former `validate` method (which is based on `for-comprehensions`), because `Validated` is not a Monad, so it doesn't have `flatMap`. Instead, `Validated` is an [Applicative Functor](https://typelevel.org/cats/typeclasses/applicativetraverse.html). We have to apply some refactors to this method.
+The problem with this approach is that we cannot use our former `validate` method (which is based on `for-comprehensions`). It is because `Validated` is not a `Monad`, so it doesn't have `flatMap`. Instead, `Validated` is an [Applicative Functor](https://typelevel.org/cats/typeclasses/applicativetraverse.html). We have to apply some refactors to this method.
 
 # Using Applicative
 
@@ -199,15 +199,15 @@ val result = validate(account)
 println(result) // it will print: Invalid(NonEmptyList(UserIsInvalid, InitialAmountNotPositive, CreationDateInvalid))
 ```
 
-So, we achieved our goal of having an accumulated list of valition errors in case of failure.
+So, we achieved our goal of having an accumulated list of valition errors in case of failure. 
 
 # Some words about Applicative and mapN
 
-`mapN` uses [Semigroupal](https://typelevel.org/cats/api/cats/Semigroupal.html) under the hood. More specifically, the method `product` from `Semigroupal`. This method allow us to combine two effects `F[A]` and `F[B]` into `F[(A, B)]`.
+`mapN` is a `syntax method` from `Applicative`, which extends [Semigroupal](https://typelevel.org/cats/api/cats/Semigroupal.html) under the hood. More specifically, the method `product` from `Semigroupal`. This method allow us to combine two effects `F[A]` and `F[B]` into `F[(A, B)]`.
 
 In case of `Validated`, the `product` method accumulate validation errors if founds any. Otherwise, it returns the product (`Valid[(A, B, C, ...)])`).
 
-You can found more info about `Applicative` in [Cats documentation](https://typelevel.org/cats/typeclasses/applicative.html). Also, the book [Essential Effects](https://essentialeffects.dev/) brings a great intro to this topic and its importance when applying to parallelism.
+`Semigroupal` and `Applicative` typeclasses are useful in cases like this, when we require more flexibility in the way we execute our effects (in contrast with `Monad`, which enforces sequential execution with `fail-fast` semantics). In practice, you are likely to work with `Applicative` syntax instead of `Semigroupal` directly. You can find more info about `Applicative` in [Cats documentation](https://typelevel.org/cats/typeclasses/applicative.html). Also, the book [Essential Effects](https://essentialeffects.dev/) brings a great intro to this topic and its importance when applying to concurrent effect evaluation.
 
 # An improvement
 
