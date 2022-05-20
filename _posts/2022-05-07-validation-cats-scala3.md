@@ -1,5 +1,5 @@
 ---
-title: Validation with Cats in Scala 3
+title: Validation in Scala 3 with Cats
 date: 2022-05-07 19:28:00
 excerpt: 'Validate your domain entities in Scala 3 using Cats'
 categories:
