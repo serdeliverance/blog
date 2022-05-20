@@ -16,7 +16,31 @@ header:
 
 # Hexagonal architecture
 
-`TODO`
+`TODO traducir todo esto a ingles, revisar vocabulario y contextualizar`
+
+`TODO agregar links y referencia al libro Get Your Hands dirty`
+
+```
+// TODO borrame despues de agregar los links a la sección
+
+https://reflectoring.io/spring-hexagonal/  (buena data, pero en spring boot)
+https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)
+https://alistair.cockburn.us/hexagonal-architecture/ (creador de esta arquitectura)
+```
+
+hexagonal es una arquitectura que ya tiene casi 20 años (también se la conoce como ports and adapters architecture), y se está empezando a popularizar ahora. tiene buenas ventajas, como que dejás el dominio en el centro de la aplicación. El resto de las capas se comunican con el dominio, pero este no depende de ninguno (el sentido de las dependencias es de afuera hacia adentro)
+
+las capas mas externas se llaman adapters, y sería el limite con el mundo exterior (la db, un cliente rest, kafka, una api externa)
+
+el domain solo contiene objetos de dominio y use cases (que serían las operaciones que puede hacer tu dominio). La capa application implementa la lógica de negocio y expone interfaces, llamadas ports para que la capa adapter pueda ejecutar los casos de uso (adapter ---referencia-a--> port <---es implementado--por-- application --referencia-a--> dominio)
+
+Algo copado es que se puede combinar con tagless final, exponiendo tus use cases como algebras (completamente independiente de las librerias que uses luego en las capas externas)
+
+el golazo de esto es que podes cambiar la capa adapter y el dominio ni se entera... por ejemplo, yo cambie de skunk por quill y no paso nada. y en un momento quise usar caliban para graphql y despues lo cambie por sangria y no paso nada.
+
+Si tu aplicación es un crud tranca, medio que usar este estilo es un overkill. Pero si tu app tiene muchas reglas de negocio, y diferentes tipos de integraciones, puede ser un buen approach.
+en el challenge no me pidieron que usara hexagonal. si me pidieron que use ciertas librerias. le mande hexagonal para ver que onda nomas
+no hay mucha info a nivel libros sobre arq hexagonal.. salvo estos links:
 
 # Tagless final
 
