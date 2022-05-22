@@ -230,7 +230,33 @@ El autor menciona que es importante que la seguridad se relacione con la estruct
 
 Si tenemos un equipo estilo `two-pizza teams`, veremos que su impacto y frecuencia de delivery son altos, ya que la comunicación es ágil. Si, por el contrario, tenemos un equipo distribuido geográficamente, que trabaja en zonas horarias muy dispares, dicha estructura se reflejará en la frecuencia de cambios (por ejemplo, consensuar sobre cambios se vuelve una tarea ardua) y en el diseño.
 
+# Microservices at Scale
 
+# Bringing all things together
+
+Principios de los microservicios:
+
+- modeled around business concepts: usar bounded-context para modelar microservicios en función del dominio. Esto hace que sea más facil distinguir los limites de cada uno y representar los procesos de negocio.
+
+- culture of automation: automated testing, deploy the same way everywhere, continuous delivery... otras recomendacions: custom images (para aumentar velocidad del deployment)
+
+- hide internal implementation details: no importa que alla detras un ms, es mejor que esté oculto para el resto de los ms, así se evita el acoplamiento (por ejemplo: un ms no debería saber/conocer la db de otro, es un detalle de implementación). Usar protocolos que sean tecnology agnostic para facilitar la integracion.
+
+- isolate failure: debemos considerar siempre el fallo. estamos usando ms, asi que tenemos que ser conscientes de los escenarios, para evitar los fallos en cascada. Recomendaciones: timeouts, bulkheads, circuit breakers, y siempre pensar en el impacto que tiene para el cliente.
+
+- deploy independently: recomendaciones. `one server per host`, para evitar que el deploy de un ms afecte a otros. `blue/green deployment` para separar deploy de release, reduciendo la posibilidad de que un release salga mal. `consumer-driven contracts` para catchear breaking changes antes de que ocurran. Siempre tener la `siguiente norma`: `el deploy de un ms no debe implicar que otros ms deban ser deployados tambien`, ya que esto (tener varias versiones atadas...) genera un fuerte acoplamiento y aumenta el riesgo de que algo salga mal.
+
+- decentralize all the things: mas orientado al `self-service` e independencia de los equipos, para poder testear y realizar releases de manera autónoma. se recomienda `choreography` sobre `orchestration`, ya que esto evita que la lógica de negocio se concentre en un solo lugar/equipo. Tener en cuenta la `Conway's Law` y acomodar los equipos de acuerdo a la estructura organizacional.
+
+- highly observable
+
+Algunas palabras sobre ms y recoemndaciones generales:
+
+Siempre pensar en el dominio. Definir bien los `bounded contexts`, esto va a permitir tener una buena separacion entre servicios y tener una armoniosa `service to service communication`. Entener el dominio es clave.
+
+Empezar un `Greenfield` project es desafiante. Se recomienda en este caso, arrancar con un monolito, y a medida que el sistema crezca y asi también nuestro conocimiento del dominio, recién ahí considerar splittear bounded contexts. Obviamente, empezar a splitear cuando tengamos un sistema estable.
+
+Pensar en una `evolutionary architecture`, realizar cambios incrementales. Reducir en scope las desiciones, para que el impacto en caso de fallo sea menor. Buscar siempre un enfoque incremental
 
 ## TODO
 
