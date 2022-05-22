@@ -12,7 +12,7 @@ header:
 
 # Intro
 
-# The audience of this book
+# Who is audience of this book?
 
 I think this book is a must read for any software developer, tech lead and architect involved in the delivery of value through the creation of software. It does not matter if you are working on a monolith or using microservices, this book gives you lot of insights based on the broad and real world experience the author has on this field.
 
