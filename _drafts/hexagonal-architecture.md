@@ -43,3 +43,34 @@ El principio de `Single Responsibility` generalmente es interpretado como que un
 > We can turn around (invert) the direction of any dependency with our codebase.
 >
 > -- <cite>Misterious Head of Wisdom</cite>
+
+`TODO`
+
+# Hexagonal Architecture
+
+# Package organization (analizar si va o no la seccion)
+
+Es importante notar que este packaging es muy expresivo y hace muy facil identificar no solo los casos de uso, sino también los adapters. Esto ayuda mucho para saber dónde hay que trabajar o hacer foco al momento de desarrollar nuevos features (crear, modificar adapters, o implementar nuevos use cases).
+
+Este packaging es muy expresivo y hace la arquitectura más explicita para los developers.
+
+# --------------------
+# Notas
+# --------------------
+
+domain => contains the domain model
+application => contains service layer around the domain model
+ej: SendMoneyService implementa el port in interface SendMoneyUseCase
+
+```
+├── application
+│   ├── SendMoneyService
+│   ├── ports
+│   │   ├── in
+|   |   |    ├── SendMoneyUseCase
+│   │   └── out
+|   |        ├── LoadAccountPort    // lo implementa adapter.out.persistence.ARepository
+```
+
+adapter => contains incoming adapters that calls application layer incoming ports
+        => contains also outgoing adapters that provides implementation for the application layer outgoing ports
