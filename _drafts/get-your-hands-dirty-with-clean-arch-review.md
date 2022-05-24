@@ -11,7 +11,7 @@ header:
 
 # Intro
 
-In this review we are going to talk about the awesome book [Get Your Hands Dirty with Clean Architecture]() by `Tom Hombergs`
+In this review we are going to talk about the awesome book [Get Your Hands Dirty with Clean Architecture](https://reflectoring.io/book/) by `Tom Hombergs`
 
 # Who is audience of this book?
 
@@ -29,9 +29,10 @@ Then, the author explains why `Single Resposibility Principle` and the `Dependen
 
 # How to take the most of this book
 
-As I said before, the book has a really practical approach. I recommend coding the `buckpal` application together with the author. Also, I suggest to take a pet project you have and refactoring it using the ideas seen in the book. Following those tips you'll find yourself adopting this approach very quickly and getting the benefits of this interesting architecture.
+As I said before, the book has a really practical approach. I recommend coding the `buckpal` application together with the author. Also, I suggest to take a pet project you have and refactoring it using the ideas exposed in this book. By following those tips, you'll find yourself adopting this approach very quickly and getting the benefits of this interesting architecture.
 
 As a theoric complement, I strongly recommend watching the talk [Clean Architecture with Spring](https://www.youtube.com/watch?v=cPH5AiqLQTo) by the same author, and reading the post [Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/) by `Alistair Cockburn`, the creator of this architectural style.
 
 # Conclusion
 
+`TODO`
