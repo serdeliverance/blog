@@ -12,6 +12,8 @@ header:
 
 # Intro
 
+In this post we are going to review [Building Microservices](https://www.amazon.com/Building-Microservices-Designing-Fine-Grained-Systems/dp/1491950358) by `Sam Newman`. This is an awesome book about `Microservice Architecture` that gives you a lot of advice about microservices implementation, what is the motivation behind it and why it is not just a tech thing but also a cultural way of improving delivering.
+
 # Who is audience of this book?
 
 I think this book is a must read for any software developer, tech lead and architect involved in the delivery of value through the creation of software. It does not matter if you are working on a monolith or using microservices, this book gives you lot of insights based on the broad and real world experience the author has on this field.
@@ -22,7 +24,13 @@ I think this book is a must read for any software developer, tech lead and archi
 
 # Review
 
-`TODO`
+The books starts explaining what microservices are and their key benefits. The second chapters explains the role of the `Evolutionary Architect`, who takes an important role in the adoption and implementation of microservices. She has to take certain responsabilities (`Vision`, `Empathy`, `Collaboration`, `Adaptability`, `Autonomy` and `Governance`) in order to lead this transition in a realistic and pragmatic way without loosing focus on the business needs.
+
+After that, the author continues explaining `Bounded Contexts` and its importance when defining microservices boundaries that guarantees high coesed and loosely coupled microservices. Also, approaches for splitting the monolith, integration (`TODO ahondar mas sobre este punto`), versioning, CI/CD and testing are explaining in further chapters.
+
+Some important things to mention about testing: `TODO la opinion sobre e2e, explicar consumer driven test`
+
+Also I think it's really cool of this book if that all the lessons and advices come from experience and all of them are explained through real life situations the author found through working on a pletora of projects.
 
 # Conclusion
 
