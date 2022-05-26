@@ -20,6 +20,7 @@ header:
 
 `TODO agregar links y referencia al libro Get Your Hands dirty`
 
+`TODO agregar explicación mínima rich domain vs anemic y por qué decidimos ir en este caso por un anemic domain`
 ```
 // TODO borrame despues de agregar los links a la sección
 
@@ -106,7 +107,15 @@ Our folder structure is taking now the following shape:
 
 `TODO UPDATED screenshoot of the folder structure`
 
-# Implementing the Create account use case
+# Implementing the XXXX use case
+
+<<<NOTA MIA>>>
+
+Es importante que en la capa de application se hagan las validaciones del input, para no dejar esta responsabilidad en los adapters, dado que podemos llegar a tener muchos, entonces deberiamos duplicar la logica en cada uno de ellos, dejando una ventana a que ingresen entities contaminadas a nuestro domain.
+
+Una forma de lograr esto, es definir `Command objects` en nuestros `use cases`, de esta forma aseguramos el input que ellos deben recibir. Ademas, dependiendo de la tecnologia que usemos, podemos llegar a disponer de librerias de validaciones que complementen a nuestros comand objects (como por ej: `Validation API` en caso de apps en `Java`)
+
+<<<NOTA MIA>>>
 
 The `application layer` is in charge of implementing the business logic and wire the remaining layers together. More specifically, it communicates the adapter layer with the domain one through ports.
 
@@ -147,17 +156,15 @@ This implementation is dummy, but reflects the dependency with our colaborator (
 
 I leave the implementation of `GetAccountUseCase` as an exercise for the reader. However, you can check it out in the [repo](https://google.com)
 
-# Adapters
+# Ingoing adapter
 
-# Implementing the get all accounts use case
-
-# Adding more adapters and implementing the missing ones
+# Outgoing adapter
 
 # Wiring all things together
 
 `TODO create server instantiating resources`
 
-# Refactor #1: Improving account retrieving using cache
+# Refactor #1: Improving outgoing persistence adapter using cache
 
 `TODO`
 
@@ -170,7 +177,5 @@ I leave the implementation of `GetAccountUseCase` as an exercise for the reader.
 # Refactor #3: adding kafka adapter
 
 # Testing
-
-# Improvements
 
 # Conclusion
