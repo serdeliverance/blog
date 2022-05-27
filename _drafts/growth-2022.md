@@ -12,7 +12,9 @@ header:
 
 # Intro
 
-# Books readed
+# Achivements
+
+## Books readed
 
 Tech book list:
 
@@ -24,7 +26,7 @@ No tech book list:
 
 - `Rich Dad Poor Dad` by `Robert Kiyosaki`
 
-# Certifications and tech achievements
+## Certifications and tech achievements
 
 Certifications:
 
@@ -37,5 +39,9 @@ Blog
 # In progress
 
 # Next
+
+# Strategy
+
+Do one thing at a time. Using `Timeboxing` was key to achieve that.
 
 # Final words
