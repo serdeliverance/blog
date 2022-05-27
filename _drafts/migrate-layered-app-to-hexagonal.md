@@ -43,7 +43,7 @@ I think starting simple is better. This will be an incremental process. To do so
 
 Let's take a minute to check the `UserService` before talking about the `strategy we are going to use`:
 
-``` Java
+``` java
 @Service
 @RequiredArgsConstructor
 @Slf4j
