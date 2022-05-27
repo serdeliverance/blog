@@ -87,3 +87,11 @@ I think a good approach for doing this is to use something similar to the well k
 `TODO brief explanation of strangler patter`
 
  We are going to migrate this functionallity using `Hexagonal Architecture` but without erasing the original code. So, in some way, we are going to mantain two versions of the same functionallity during the migration (as `Strangle Pattern` suggest). After
+
+# Disclaimer
+
+Throughout this tutorial we have seen how to create adapters, ports and use cases that can evolve independently. However, our code is not so `technology agnostic` as it could be, because we rely strongly in the `Spring Boot` platform for `dependecy injection` and `auto configuration`. We can see that our services and repositories, which are annotated with `@Service` and `@Repository` annotations. It is not wrong and also it was on purpose, because I really wanted to take advantage of these benefits. What I'm trying to say is that the overall architecture is what really matters. Having our domain centric and not dependant of any outer layer is crucial, and having the freedom to refactor our adapters, adding new ones easily, parallelizing work and having a visual architectural representation through packaging are benefits that have no price. There always will be architectural components or primitives that will take more or less protagonism. Remember: extreme purism is not practical. Bringing business value is what really matters.
+
+Of course, there are approaches to develop a completely agnostic `Hexagonal Architecture` following a more minimalistic approach. Maybe, it can see a topic for a future post ;)
+
+ # Conclusion
