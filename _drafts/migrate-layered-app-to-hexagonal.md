@@ -153,7 +153,9 @@ We are going to define our `output port` and then implement it in the `adapter l
 
 `TODO explanation`
 
-`TODO screenshot of package structure`
+Let's see how our packaging is taking shape:
+
+![packaging-checkpoint-1]({{ site.baseurl }}/assets/images/migrate-nlayer-app-to-hexagonal/checkpoint-1-package-view.png "Checkpoint 1")
 
 `TODO component diagram of the current architecture`
 
