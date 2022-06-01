@@ -143,7 +143,7 @@ class GetUserByIdService(private val userRepository: UserRepositoryPort) : GetUs
 
 As you can see, we require some functionally from the `outside world`. In this case, we require a `port` for retrieving the users.
 
-We are going to define our `output port` and then implement it in the `adapter layer`
+We are going to define our `output port` and then implement it in the `adapter layer`.
 
 # Persistence Adapter
 
