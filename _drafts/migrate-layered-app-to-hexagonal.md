@@ -161,6 +161,27 @@ Let's see how our packaging is taking shape:
 
 # A more complicated use case: Money transfer
 
+1) primero, migrar el domain
+
+``` kotlin
+data class Transaction(
+    val id: Long,
+    val userId: Int,
+    val cryptoCurrencyId: Int,
+    val amount: BigDecimal,
+    val operationType: OperationType,
+    val transactionDate: LocalDateTime
+)
+```
+
+2) definir el usecase
+
+``` kotlin
+interface TransferMoneyUseCase {
+    fun transfer(issuer: User, receiver: User, cryptocurrency: Cryptocurrency, amount: BigDecimal)
+}
+```
+
 # Domain and Application Layer
 
 TODO mention anemic vs DDD modeling and why we choose to be anemyc in this implementation
