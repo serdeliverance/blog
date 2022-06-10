@@ -110,10 +110,10 @@ public class User {
 We can translate this, to a [data class](https://kotlinlang.org/docs/data-classes.html) in `Kotlin`:
 
 ``` kotlin
-data class User(val id: Int?, val username: String, val password: String, val email: String)
+data class User(val id: Int, val username: String, val password: String, val email: String)
 ```
 
-Using `data classes` also favors in terms of immutability (which is something good for concurrent apps). We also translate the type of the `id` attribute from `Optional<Int>` to a [nullable attribute](https://kotlinlang.org/docs/null-safety.html#nullable-types-and-non-null-types).
+Also, we took the opportunity to make a light improvement: we defined the `user` in our domain to always have its id field defined (we removed the `Optional`).
 
 In order to not have collisions and also to avoid breaking working code, we define this data class in a new `package` called `v2.domain`. Once all `classes` in the original `domain` package were migrated, we can rename our `v2.domain` package to `domain`.
 
@@ -176,11 +176,116 @@ data class Transaction(
 
 2) definir el usecase
 
+en application.port.in creamos nuestro use case:
+
 ``` kotlin
 interface TransferMoneyUseCase {
-    fun transfer(issuer: User, receiver: User, cryptocurrency: Cryptocurrency, amount: BigDecimal)
+    fun transfer(issuer: User, receiver: User, cryptocurrency: Cryptocurrency, amount: BigDecimal): Unit
 }
 ```
+
+Nuestra implementacion va a ser muy simple. Si la transferencia es exitosa, retorna Unit, caso contrario fallará con alguna excepcion
+
+Disclaimer: sé que para algún aficionado de la programación funcional esta effectful implementation no es muy atractiva (recordar que nuestro foco aquí es la implementación de arquitectura hexagonal) .No obstante, un tema interesante para un próximo artículo podría ser refactorizar esta app para darle un toque más funcional.
+
+3) en application.service implementamos dicha funcionalidad
+
+``` kotlin
+class TransferMoneyService : TransferMoneyUseCase {
+    
+    override fun transfer(issuer: User, receiver: User, cryptocurrency: Cryptocurrency, amount: BigDecimal) {
+        TODO("Not yet implemented")
+    }
+}
+```
+
+Las operaciones que queremos hacer acá son:
+
+1. cargar los balances de cada usuario
+2. validar que el issuer tiene fondos suficientes para hacer la transferencia
+3. extraer el monto de la cuenta de origen
+4. depositar el monto en la cuenta de destino
+
+Con esto, podemos notar que minimamente necesitamos un colaborador para la carga de balances. Entonces, se podria decir que necesitamos un ouput port, o un application driven port. Es una buena practica definir los puertos de forma que su nombre sea expresivo de la funcionalidad que representa (esto también hace que sean más granulares). Entonces, empezamos definando dicho colaborador:
+
+``` kotlin
+class TransferMoneyService(val loadBalancePort: LoadBalancePort) : TransferMoneyUseCase {
+
+    override fun transfer(issuer: User, receiver: User, cryptocurrency: Cryptocurrency, amount: BigDecimal) {
+        TODO("Not yet implemented")
+    }
+}
+```
+
+Dejemos creado dicho colaborador en el package application.port.in:
+
+``` kotlin
+interface LoadBalancePort {
+
+    fun getBalanceByCurrency(userId: Int, currencyId: Int): Balance
+}
+```
+
+No tenemos definido una clase Balance, entonces creemosla:
+
+``` kotlin
+data class Balance(val userId: Int, val cryptocurrency: Cryptocurrency, val amount: BigDecimal)
+```
+
+Ahora, nuestra implementación será la siguiente:
+
+``` kotlin
+class TransferMoneyService(val loadBalancePort: LoadBalancePort) : TransferMoneyUseCase {
+
+    override fun transfer(issuer: User, receiver: User, cryptocurrency: Cryptocurrency, amount: BigDecimal) {
+        val issuerBalance = loadBalancePort.getBalanceByCurrency(issuer.id, cryptocurrency.id)
+        if (issuerBalance.amount >= amount) {
+            // debit amount from issuer
+            // deposit amount to receiver
+        }
+    }
+}
+```
+
+Podemos ser mas espeficios y tener un use case para el deposito, y otro para la extracción:
+
+``` kotlin
+class TransferMoneyService(val loadBalancePort: LoadBalancePort, val withdrawalUserCase: WithDrawalUseCase, val depositUseCase: DepositUseCase) : TransferMoneyUseCase {
+    // remaining code commented
+}
+```
+
+Terminamos de implementar el use case, dejando que la lógica de negocio vaya revelando cuales métodos necesitamos de nuestros nuevos colaboradores:
+
+``` kotlin
+class TransferMoneyService(val loadBalancePort: LoadBalancePort, val withdrawalUserCase: WithDrawalUseCase, val depositUseCase: DepositUseCase) : TransferMoneyUseCase {
+
+    override fun transfer(issuer: User, receiver: User, cryptocurrency: Cryptocurrency, amount: BigDecimal) {
+        val issuerBalance = loadBalancePort.getBalanceByCurrency(issuer.id, cryptocurrency.id)
+        if (issuerBalance.amount >= amount) {
+            withdrawalUserCase.withdraw(issuer.id, amount)
+            depositUseCase.deposit(receiver.id, amount)
+        }
+    }
+}
+```
+
+Ahora que sabemos qué necesitamos, agregamos dichos metodos en las interfaces correspondientes:
+
+``` kotlin
+interface WithDrawalUseCase {
+    fun withdraw(id: Int, amount: BigDecimal): Transaction
+}
+```
+
+``` kotlin
+interface DepositUseCase {
+    fun deposit(id: Int, amount: BigDecimal): Transaction
+}
+```
+
+
+Disclaimer: esta implementación es simple y no tenemos en cuenta cuestiones de transaccionalidad.
 
 # Domain and Application Layer
 
