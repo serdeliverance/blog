@@ -260,12 +260,16 @@ Terminamos de implementar el use case, dejando que la lógica de negocio vaya re
 ``` kotlin
 class TransferMoneyService(val loadBalancePort: LoadBalancePort, val withdrawalUserCase: WithDrawalUseCase, val depositUseCase: DepositUseCase) : TransferMoneyUseCase {
 
-    override fun transfer(issuer: User, receiver: User, cryptocurrency: Cryptocurrency, amount: BigDecimal) {
+    override fun transfer(issuer: User, receiver: User, cryptocurrency: Cryptocurrency, amount: BigDecimal): Transference {
         val issuerBalance = loadBalancePort.getBalanceByCurrency(issuer.id, cryptocurrency.id)
-        if (issuerBalance.amount >= amount) {
-            withdrawalUserCase.withdraw(issuer.id, amount)
-            depositUseCase.deposit(receiver.id, amount)
-        }
+
+        if (issuerBalance.amount < amount)
+            throw InsufficientFundsException()
+
+        val withdrawTransactionResult = withdrawalUserCase.withdraw(issuer.id, amount)
+        val depositTransactionResult = depositUseCase.deposit(receiver.id, amount)
+
+        return Transference(issuer.id, receiver.id, amount, withdrawTransactionResult.id, depositTransactionResult.id, depositTransactionResult.transactionDate)
     }
 }
 ```
@@ -284,6 +288,9 @@ interface DepositUseCase {
 }
 ```
 
+TODO explicacion del tipo de dato Transference
+
+TODO explicacion de la creacion de la exception
 
 Disclaimer: esta implementación es simple y no tenemos en cuenta cuestiones de transaccionalidad.
 
