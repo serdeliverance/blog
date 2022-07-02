@@ -67,7 +67,7 @@ plugins:
 
 author:
   name   : "Sergio Cano"
-  bio    : "Blogging about software development in general."
+  bio    : "Blogging about JVM, Microservices, Functional Programming, Reactive Programming, Scala and Java."
   links:
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
