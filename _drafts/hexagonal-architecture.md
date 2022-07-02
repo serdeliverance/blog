@@ -44,15 +44,37 @@ El principio de `Single Responsibility` generalmente es interpretado como que un
 >
 > -- <cite>Misterious Head of Wisdom</cite>
 
-`TODO`
+Inversion de dependencias es una tecnica clave en el camino hacia un dominio completamente desacoplado e independiente de adapter e integraciones. Recordemos que en arquitectura hexagonal, el flujo de dependencias es de afuera hacia adentro, siendo las capas internas o core, un conjunto de elementos completamente desacoplado que define las piezas fundamentales del dominio y las reglas de negocio. Para poder llegar a esto, es necesario tener un mecanismo que nos ayude a "invertir" el sentido de las dependencias, esto nos ayuda a que el dominio solo tenga una unica razon de cambiar (Single Responsibility Principle), desacoplandolo de los adapters y del resto del mundo.
+
+Veamos un ejemplo
+
+`TODO ejemplo con diagrmas`
 
 # Hexagonal Architecture
 
-# Package organization (analizar si va o no la seccion)
+`TODO `
 
-Es importante notar que este packaging es muy expresivo y hace muy facil identificar no solo los casos de uso, sino también los adapters. Esto ayuda mucho para saber dónde hay que trabajar o hacer foco al momento de desarrollar nuevos features (crear, modificar adapters, o implementar nuevos use cases).
+Los beneficios de la arquitectura hexagonal son, basicamente:
+
+- tener una clara separacion de responsabilidades, donde el dominio pueda evolucionar independientemente de las capas externas
+- facilitar la identificacion de componentes con una estructura expresiva. tener componentes especificos donde su responsabilidad es clara y su scope acotado
+- poder paralelizar el trabajo (diferentes devs trabajando en distintos use cases sin overlaping)
+- poder refactorizar agregando nuevos adapters e integraciones con nulo impacto en las capas core del negocio
+- poder testear/validar las reglas de negocio independientemente del mundo interior
+
+# Packing
+
+Es crucial tener un modelo de packaging que sea fiel a los principios de arquitectura hexagonal. Al principio puede parecer dificil, pero una vez asimilados, nos va a dar grandes beneficios. Se busca que el packaging sea muy expresivo, para que, como se menciono anteriormente, sea facil identificar no solo los casos de uso, sino también los adapters. Esto ayuda mucho para saber dónde hay que trabajar o hacer foco al momento de desarrollar nuevos features (crear, modificar adapters, o implementar nuevos use cases).
 
 Este packaging es muy expresivo y hace la arquitectura más explicita para los developers.
+
+Este packagin esta explicado en java, pero dicha estructura puede trasladarse a otros lenguajes.
+
+# Conclusion
+
+`TODO intro a la seccion y resumen`
+
+En proximos posts estaremos viendo dos series dedicadas a la implementacion de esta arquitectura: una refactorizando una aplicacion tradicional java/spring boot, y otra creando un nuevo desde cero en Scala 3 con pure FP.
 
 # --------------------
 # Notas
