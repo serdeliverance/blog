@@ -1,6 +1,6 @@
 ---
 title: Add Kotlin support to Spring Boot app
-date: 2022-05-07 19:28:00
+date: 2022-05-27 19:28:00
 excerpt: 'How to add Kotlin support to Spring Boot'
 categories:
   - blog
@@ -44,15 +44,15 @@ Now, we have to add the `kotlin-reflect` and `kotlin-stdlib-jdk8` dependencies i
 ```
     <dependencies>
         <!-- other dependencies above -->
-		<dependency>
-			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-reflect</artifactId>
-		</dependency>
+  <dependency>
+   <groupId>org.jetbrains.kotlin</groupId>
+   <artifactId>kotlin-reflect</artifactId>
+  </dependency>
 
-		<dependency>
-			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-stdlib-jdk8</artifactId>
-		</dependency>
+  <dependency>
+   <groupId>org.jetbrains.kotlin</groupId>
+   <artifactId>kotlin-stdlib-jdk8</artifactId>
+  </dependency>
         <!-- more dependencies bellow-->
     </dependencies>
 ```
@@ -61,8 +61,8 @@ Then, in the `build` section, we need to add the source and test directories
 
 ```
     <build>
-		<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-		<testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+  <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+  <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <!-- more configs-->
     </build>
 ```
