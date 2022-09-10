@@ -1,6 +1,6 @@
 ---
 title: Add Kotlin support to Spring Boot app
-date: 2022-05-27 19:28:00
+date: 2022-05-26 19:28:00
 excerpt: 'How to add Kotlin support to Spring Boot'
 categories:
   - blog
