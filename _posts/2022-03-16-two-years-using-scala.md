@@ -42,7 +42,7 @@ Some things that I love from this language are:
 
 - case classes
 
-- immmutability in general
+- immutability in general
 
 - lazy vals
 
@@ -60,7 +60,7 @@ Some things that I love from this language are:
 
 - Typeclasses (without abusing of it)
 
-- functional programming libraries without being a `FP foundamentalist`
+- functional programming libraries without being a `FP fundamentalist`
 
 - the `Akka` ecosystem.
 
