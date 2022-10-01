@@ -93,7 +93,7 @@ def allRoles[F[_], Auth](
 
 I think the approach of abstracting over the effect system and define interpreters is cool, but trying to be ultra type safe is not beginner friendly and engornomic. If you can have a good balance between abstraction and code readability, it has a great ecosystem and it is a very enjoyable approach.
 
-Typelevel has a lot of resources to learn and its community is very active and friendly. Reading its docummentation is always insightful and joining to its `Discord` challenge is worthwhile (there are lots of brillant people there that are very pleased to help you if you have any question).
+Typelevel has a lot of resources to learn and its community is very active and friendly. Reading its docummentation is always insightful and joining to its `Discord` channel is worthwhile (there are lots of brillant people there that are very pleased to help you if you have any question).
 
 ### ZIO
 
