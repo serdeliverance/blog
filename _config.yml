@@ -16,7 +16,7 @@
 title: "Sergio Cano"
 email:
 description: >- # this means to ignore newlines until "baseurl:"
-  Articles about Java, Kotlin, JVM in general, Microservices and Reactive Programming.
+  Articles about Scala, Microservices, JVM in general and sometimes Java.
 twitter_username: serdeliverance
 github_username: serdeliverance
 minimal_mistakes_skin: default
@@ -65,7 +65,7 @@ plugins:
 
 author:
   name   : "Sergio Cano"
-  bio    : "Blogging about JVM related technologies, Microservices and Reactive Programming."
+  bio    : "Blogging about Scala, Microservices and JVM."
   links:
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
