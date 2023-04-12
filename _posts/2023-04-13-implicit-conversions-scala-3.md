@@ -12,6 +12,8 @@ header:
 ---
 ## Intro
 
+In this post we are going to see how to use `implicit conversions` in `Scala 3` and why we should avoid the usage of this mechanism in general.
+
 ## Implicit conversions in Scala 2
 
 Imagine you have the following class:
