@@ -1,6 +1,6 @@
 ---
 title: Implicit Conversions in Scala 3
-date: 2023-04-13 20:19:00
+date: 2023-04-12 20:19:00
 excerpt: 'how to do implicit conversions in Scala 3'
 categories:
   - blog
