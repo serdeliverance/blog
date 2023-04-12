@@ -1,5 +1,6 @@
 ---
 title: Context Bounds
+date: 2023-04-11 11:15:00
 excerpt: 'Reviewing context bounds'
 categories:
   - blog
