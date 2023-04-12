@@ -5,6 +5,7 @@ categories:
   - blog
 tags:
   - scala
+  - scala 3
 header:
   image: '/images/header.jpg'
 ---
