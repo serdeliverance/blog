@@ -34,14 +34,14 @@ implicit def string2Person(string: String): Person =
 You'll be perfectly able able to do the following and the compiler won't complain:
 
 ``` scala
-val pepe: Person = "pepe"
+val maluma: Person = "maluma"
 "Maluma".greet
 ```
 
 That is possible, because the compiler will look for an `implicit conversion` in scope and, once it finds one, it will apply it to convert from one type to the desired one. Basically, it will do the following (commented code):
 
 ``` scala
-val maluma: Person = "Maluma" // string2Person("pepe")
+val maluma: Person = "Maluma" // string2Person("Maluma")
 "Maluma".greet // string2Person("Maluma").greet
 ```
 
