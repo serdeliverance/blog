@@ -1,5 +1,5 @@
 ---
-title: Implicits
+title: Implicits in Scala
 date: 2020-08-23 19:50:00
 excerpt: 'What are implicits, Why are they so important and how to start using them?'
 categories:
