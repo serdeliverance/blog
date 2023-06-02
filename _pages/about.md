@@ -5,6 +5,6 @@ header:
   image: '/images/header.jpg'
 ---
 
-Fullstack Engineer stronger on backend. Most of my experience is based on JVM related technologies (Scala and Java). The aim of this blog is to share knowledge about Scala programming language, Functional Programming, Microservices and JVM in general.
+Fullstack Engineer stronger on backend. The aim of this blog is to share knowledge about Microservices, Tech Stacks (with special emphasis in JVM related ones and maybe some Node/React) and Software Engineering in general.
 
 Also, I'm a Systems Engineer graduated from Universidad Tecnológica Nacional with a postgraduate in Business Intelligence.
