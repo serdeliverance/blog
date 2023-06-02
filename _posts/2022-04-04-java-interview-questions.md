@@ -70,7 +70,7 @@ Some week ago, a friend asked me for a mock interview in `Java`. Given that I us
 
 27. What are `Threads`? What they are useful for? How can you create a `Thread`?
 
-28. What does the keyboard `volatile`?
+28. What does the keyword `volatile`?
 
 29. Explain `ExecutorService`.
 
