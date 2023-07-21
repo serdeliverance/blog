@@ -1,5 +1,5 @@
 ---
-title: A killing interview 
+title: A killer interview 
 date: 2023-07-21 20:39:00
 excerpt: 'Some (killing) interview questions'
 categories:
