@@ -14,7 +14,7 @@ header:
 ---
 ## Intro
 
-Some weeks ago, I remember being completely destroyed on an interview. This interview was a really challenging one for a very interesting position. I was not actively looking for a change, but I decided to give it a try. Most of its questions took me by surprise. However, I must confess that they were quite effective in the way of testing know how much you know about the basics.
+Some weeks ago, I remember being completely destroyed on an interview. This interview was a really challenging one for a very interesting position. I was not actively looking for a change, but I decided to give it a try. Most of its questions took me by surprise. However, I must confess that they were quite effective in the way of testing how much you know about the basics.
 
 It was a great opportunity to evaluate myself and identify topics I really need to dive deeper. Here are the questions.
 
@@ -46,4 +46,4 @@ It was a great opportunity to evaluate myself and identify topics I really need 
 
 I think than taking interviews from time to time is great for keeping in shape. You don't when you are going to go back to the interview market. However, it is better to start preparing from now, step by step, one question at a time.
 
-Also, I'm planning to start answering those questions regularly on this blog. It would be a nice chance to keep this blog alive.
+Also, I'm planning to start answering those questions regularly on this blog. It would be a nice chance to keep this blog active.
