@@ -29,18 +29,17 @@ It was a great opportunity to evaluate myself and identify topics I really need 
 7. Why Redis is so fast? How it is implemented?
 8. How is Kafka implemented?
 9. How consumer group works?
-10. Big O notation linked list
-1. size operation
-2. get operation
+10. `Time Complexity` for get and size operation on a Linked List
 11. Complexity of finding an element in an unsorted list
 12. Complexity of finding an element in a sorted list
 13. How is HashMap implemented?
-14. Explain `ADT`
-15. What is `Typeclass`? What is its difference with `interface`?
-16. How Future is schedule? Can I guarantee execution order?
-17. I have a filesystem of one directory containing files that has strings inside. How can I detect all duplicates?
-18. What is `this` in javascript
-19. How can I define an `ADT` in Typescript?
+14. How `Docker` works internally?
+15. What is an `ADT` in `Scala`
+16. What is `Typeclass`? What is its difference with `interface`?
+17. How Future is schedule? Can I guarantee execution order?
+18. I have a filesystem of one directory containing files that has strings inside. How can I detect all duplicates?
+19. What is `this` in javascript
+20. How can I define an `ADT` in Typescript?
 
 ## Conclusion
 
