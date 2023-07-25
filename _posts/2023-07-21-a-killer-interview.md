@@ -40,6 +40,7 @@ It was a great opportunity to evaluate myself and identify topics I really need 
 18. I have a filesystem of one directory containing files that has strings inside. How can I detect all duplicates?
 19. What is `this` in javascript
 20. How can I define an `ADT` in Typescript?
+21. How Nodejs `Event Loop` works?
 
 ## Conclusion
 
