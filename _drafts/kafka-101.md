@@ -1,16 +1,32 @@
 ---
-title: TODO TODO TODO
+title: Kafka 101
 excerpt: 'TODO TODO TODO'
 categories:
   - blog
 tags:
   - kafka
-  - notes
 header:
   image: '/images/header.jpg'
 ---
 
 # Intro
+
+## What is Kafka?
+
+TODO: what is kafka?
+
+TODO: who uses it?
+
+## Kafka use cases
+
+## Kafka vs Rabbit MQ vs others
+
+- message replay by default
+- built for parallelism
+
+## Delivery semantics
+
+## Noooootessss
 
 ## Producers
 
