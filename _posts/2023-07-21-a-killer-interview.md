@@ -11,7 +11,6 @@ tags:
   - typescript
 header:
   image: '/images/header.jpg'
-published: false
 ---
 ## Intro
 
