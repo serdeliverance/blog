@@ -1,6 +1,6 @@
 ---
 title: Move a PR made in a fork into a branch in the target repository
-date: 2024-00-20 08:39:00
+date: 2024-09-20 08:39:00
 excerpt: 'how to move the changes made in your fork into a branch in the target repo'
 categories:
   - blog
