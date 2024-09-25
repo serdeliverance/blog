@@ -44,6 +44,6 @@ It was a great opportunity to evaluate myself and identify topics I really need 
 
 ## Conclusion
 
-I think than taking interviews from time to time is great for keeping in shape. You don't when you are going to go back to the interview market. However, it is better to start preparing from now, step by step, one question at a time.
+I think than taking interviews from time to time is great for keeping in shape. You don't know when you are going to go back to the interview market. However, it is better to start preparing from now, step by step, one question at a time.
 
 Also, I'm planning to start answering those questions regularly on this blog. It would be a nice chance to keep this blog active.
